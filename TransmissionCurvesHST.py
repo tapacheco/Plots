@@ -45,7 +45,7 @@ for k in range(NUFL):
 axt.text(2300, 0.14, 'F275W', color='#882E72', weight='bold', fontsize=30)
 axt.text(3000, 0.215, 'F336W', color='#0077BB', weight='bold', fontsize=30)
 axt.text(3950, 0.26, 'F438W', color='#EE7733', weight='bold', fontsize=30)
-axt.text(5400, 0.445, 'F606W', color='#009988', weight='bold', fontsize=30)
+axt.text(5500, 0.445, 'F606W', color='#009988', weight='bold', fontsize=30)
 axt.text(8200, 0.36, 'F814W', color='#EE3377', weight='bold', fontsize=30)
 
 xmin, xmax, ymin, ymax = (2100, 9900, 0, 0.51)
@@ -60,5 +60,6 @@ plt.tick_params(direction='in', which='major', length=8, width=1.5, top=True, ri
 plt.tick_params(direction='in', which='minor', length=5, width=1.2, top=True, right=True)
 plt.rcParams['ytick.right'] = True 
 
-plt.show()
 plt.savefig('Filters_HST.png', dpi=200, bbox_inches = 'tight')
+
+plt.show()
