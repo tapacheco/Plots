@@ -27,10 +27,10 @@ plt.minorticks_on()
 
 # 400# 450# 510# 600# 730
 palette = itertools.cycle(["#882E72", "#882E72",
-                           "#1965B0", "#1965B0", 
-                           "#4EB265", "#4EB265",
-                           "#F6C141", "#F7F056",
-                           "#A5170E", "#DC050C"])
+                           "#0077BB", "#0077BB", 
+                           "#EE7733", "#EE7733",
+                           "#009988", "#009988",
+                           "#EE3377", "#EE3377"])
 
 NUFL = len(filter_files) 
 for k in range(NUFL):
@@ -40,13 +40,13 @@ for k in range(NUFL):
  
     sns.lineplot(data=filter, x='wavelength', y='flux', linewidth=2.5,
                  color=next(palette))
-    axt.fill_between(filter['wavelength'], filter['flux'], color=next(palette), alpha=0.5)
+    axt.fill_between(filter['wavelength'], filter['flux'], color=next(palette), alpha=0.25)
 
 axt.text(2300, 0.14, 'F275W', color='#882E72', weight='bold', fontsize=30)
-axt.text(3000, 0.22, 'F336W', color='#1965B0', weight='bold', fontsize=30)
-axt.text(3950, 0.26, 'F438W', color='#4EB265', weight='bold', fontsize=30)
-axt.text(5600, 0.30, 'F606W', color='#F6C141', weight='bold', fontsize=30)
-axt.text(7600, 0.24, 'F814W', color='#A5170E', weight='bold', fontsize=30)
+axt.text(3000, 0.215, 'F336W', color='#0077BB', weight='bold', fontsize=30)
+axt.text(3950, 0.26, 'F438W', color='#EE7733', weight='bold', fontsize=30)
+axt.text(5400, 0.445, 'F606W', color='#009988', weight='bold', fontsize=30)
+axt.text(8200, 0.36, 'F814W', color='#EE3377', weight='bold', fontsize=30)
 
 xmin, xmax, ymin, ymax = (2100, 9900, 0, 0.51)
 axt.set_xlim(xmin, xmax)
@@ -56,9 +56,9 @@ plt.ylabel(r'Transmission curve', fontsize=30)
 plt.xlabel(r'Wavelength [\AA]', fontsize=30)
 plt.xticks(fontsize=28)
 plt.yticks(fontsize=28)
-plt.tick_params(direction='in', which='major', length=8, width=1.5)
+plt.tick_params(direction='in', which='major', length=8, width=1.5, top=True, right=True)
 plt.tick_params(direction='in', which='minor', length=5, width=1.2, top=True, right=True)
 plt.rcParams['ytick.right'] = True 
 
 plt.show()
-#plt.savefig(path+'CMD.png', dpi=300, bbox_inches = 'tight')
+plt.savefig('Filters_HST.png', dpi=200, bbox_inches = 'tight')
