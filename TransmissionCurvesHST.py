@@ -6,6 +6,7 @@ from matplotlib import gridspec
 from matplotlib import rc
 rc('font',**{'family':'serif','serif':['Times New Roman']})
 rc('text', usetex=True)
+import itertools
 import seaborn as sns
 
 
@@ -21,30 +22,43 @@ filter_files = pd.Series(['./HST_WFC3_UVIS1.F275W.dat',
                           './HST_ACS_WFC.F606W.dat', 
                           './HST_ACS_WFC.F814W.dat'])
 
-fig, axt = plt.subplots(sharex=True, figsize=(8,8), tight_layout=True)
+fig, axt = plt.subplots(sharex=True, figsize=(16,8), tight_layout=True)
 plt.minorticks_on()
+
+# 400# 450# 510# 600# 730
+palette = itertools.cycle(["#882E72", "#882E72",
+                           "#1965B0", "#1965B0", 
+                           "#4EB265", "#4EB265",
+                           "#F6C141", "#F7F056",
+                           "#A5170E", "#DC050C"])
 
 NUFL = len(filter_files) 
 for k in range(NUFL):
     filter =  pd.read_csv(filter_files[k], skip_blank_lines=True, 
                           comment='#', delim_whitespace=True, 
                           names=['wavelength', 'flux'],engine='python')
-    #read_filter[k] = [filter['wavelength'], filter['flux']]
+ 
+    sns.lineplot(data=filter, x='wavelength', y='flux', linewidth=2.5,
+                 color=next(palette))
+    axt.fill_between(filter['wavelength'], filter['flux'], color=next(palette), alpha=0.5)
 
-    sns.lineplot(data=filter, x='wavelength', y='flux',
-                 linewidth=2.5)
+axt.text(2300, 0.14, 'F275W', color='#882E72', weight='bold', fontsize=30)
+axt.text(3000, 0.22, 'F336W', color='#1965B0', weight='bold', fontsize=30)
+axt.text(3950, 0.26, 'F438W', color='#4EB265', weight='bold', fontsize=30)
+axt.text(5600, 0.30, 'F606W', color='#F6C141', weight='bold', fontsize=30)
+axt.text(7600, 0.24, 'F814W', color='#A5170E', weight='bold', fontsize=30)
 
-#xmin, xmax, ymax, ymin = ()
-
-#axt.set_xlim(xmin, xmax)
-#axt.set_ylim(ymax, ymin)
+xmin, xmax, ymin, ymax = (2100, 9900, 0, 0.51)
+axt.set_xlim(xmin, xmax)
+axt.set_ylim(ymin, ymax)
 plt.title("", fontsize=30)
-plt.ylabel(r'Transmission', fontsize=30)
+plt.ylabel(r'Transmission curve', fontsize=30)
 plt.xlabel(r'Wavelength [\AA]', fontsize=30)
 plt.xticks(fontsize=28)
 plt.yticks(fontsize=28)
 plt.tick_params(direction='in', which='major', length=8, width=1.5)
-plt.tick_params(direction='in', which='minor', length=5, width=1.2)
+plt.tick_params(direction='in', which='minor', length=5, width=1.2, top=True, right=True)
+plt.rcParams['ytick.right'] = True 
 
 plt.show()
 #plt.savefig(path+'CMD.png', dpi=300, bbox_inches = 'tight')
