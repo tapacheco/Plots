@@ -21,11 +21,30 @@ filter_files = pd.Series(['./HST_WFC3_UVIS1.F275W.dat',
                           './HST_ACS_WFC.F606W.dat', 
                           './HST_ACS_WFC.F814W.dat'])
 
-NUFL = len(filter_files) 
-read_filter = {}
-for k in range(NUFL):
-        filter =  pd.read_csv(filter_files[k], skip_blank_lines=True, 
-                              comment='#', delim_whitespace=True, 
-                              names=['wavelength', 'flux'],engine='python')
-        read_filter[k] = [filter['wavelength'], filter['flux']]
+fig, axt = plt.subplots(sharex=True, figsize=(8,8), tight_layout=True)
+plt.minorticks_on()
 
+NUFL = len(filter_files) 
+for k in range(NUFL):
+    filter =  pd.read_csv(filter_files[k], skip_blank_lines=True, 
+                          comment='#', delim_whitespace=True, 
+                          names=['wavelength', 'flux'],engine='python')
+    #read_filter[k] = [filter['wavelength'], filter['flux']]
+
+    sns.lineplot(data=filter, x='wavelength', y='flux',
+                 linewidth=2.5)
+
+#xmin, xmax, ymax, ymin = ()
+
+#axt.set_xlim(xmin, xmax)
+#axt.set_ylim(ymax, ymin)
+plt.title("", fontsize=30)
+plt.ylabel(r'Transmission', fontsize=30)
+plt.xlabel(r'Wavelength [\AA]', fontsize=30)
+plt.xticks(fontsize=28)
+plt.yticks(fontsize=28)
+plt.tick_params(direction='in', which='major', length=8, width=1.5)
+plt.tick_params(direction='in', which='minor', length=5, width=1.2)
+
+plt.show()
+#plt.savefig(path+'CMD.png', dpi=300, bbox_inches = 'tight')
