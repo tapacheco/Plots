@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 
 import plot_CMDs as cmd
+import functions as apply
 
 import sys
 sys.path.append('../SSPmodels/codeModule/utilsSpecMod/')
@@ -50,6 +51,8 @@ cutoff = (photometry_gc['P'] > 90) & \
 cutoff_ms = np.where(cutoff & photometry_gc['MS'] == True)[0]
 color_ms_phase = apply_evolutionary_phase_mask(color, cutoff_ms)
 ms_color = apply_reddening(color_ms_phase, extinction)
+mag_ms_phase = apply.evolutionary_phase_mask(photometry_gc,cutoff_ms)
+ms_mag = apply.reddening(mag_ms_phase,reddening)
 
 cutoff_gb = np.where(cutoff & photometry_gc['GB'] == True)[0]
 color_gb_phase = apply_evolutionary_phase_mask(color, cutoff_gb)
@@ -71,3 +74,7 @@ cutoff_ehb = np.where(cutoff & photometry_gc['EHB'] == True)[0]
 color_ehb_phase = apply_evolutionary_phase_mask(color, cutoff_ehb)
 ehb_color = apply_reddening(color_ehb_phase, extinction)
 
+
+cmd.plot_color_magnitude_diagram(ms_color,gb_color,rhb_color, \
+                                 bs_color,bhb_color,ehb_color,\
+                                    './')

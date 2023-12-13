@@ -2,7 +2,8 @@ import numpy as np
 import pandas as pd
 import extinction 
 
-def apply_evolutionary_phase_mask(mag, cutoff):
+
+def evolutionary_phase_mask(mag, cutoff):
     
     mag_evolutionary_phase = pd.DataFrame()
     mag_evolutionary_phase['F275W'] = mag['F275W'][cutoff]
@@ -13,7 +14,8 @@ def apply_evolutionary_phase_mask(mag, cutoff):
 
     return mag_evolutionary_phase
   
-def apply_reddening(mag, reddening):
+
+def reddening(mag, reddening):
 
     obs_mag = pd.DataFrame()
     obs_mag['F275W'] = mag['F275W'] - reddening['F275W']
