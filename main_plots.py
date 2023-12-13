@@ -3,14 +3,15 @@ from math import *
 import pandas as pd
 import numpy as np
 
-import plot_CMDs
+import plot_CMDs as cmd
 
 import sys
 sys.path.append('../SSPmodels/codeModule/utilsSpecMod/')
 from photoColors import get_reddening
 from photoColors import compute_color_extinction 
 from photoColors import calculate_colors
-
+from photoColors import apply_evolutionary_phase_mask
+from photoColors import apply_reddening
 
 nameGC = 'NGC2808'
 color_excess_B_V = 0.22
@@ -36,3 +37,37 @@ extinction = compute_color_extinction(color_excess_B_V)
 
 print("\n Calculating photometric colors from HST")
 color = calculate_colors(photometry_gc['MS'])
+
+
+cutoff = (photometry_gc['P'] > 90) & \
+         (photometry_gc['RMSF275W'] < 0.07) & \
+         (photometry_gc['RMSF336W'] < 0.05) & \
+         (photometry_gc['RMSF438W'] < 0.04) & \
+         (photometry_gc['RMSF606W'] < 0.03) & \
+         (photometry_gc['RMSF814W'] < 0.03) & \
+         (photometry_gc['F438W']!=99.9999)
+
+cutoff_ms = np.where(cutoff & photometry_gc['MS'] == True)[0]
+color_ms_phase = apply_evolutionary_phase_mask(color, cutoff_ms)
+ms_color = apply_reddening(color_ms_phase, extinction)
+
+cutoff_gb = np.where(cutoff & photometry_gc['GB'] == True)[0]
+color_gb_phase = apply_evolutionary_phase_mask(color, cutoff_gb)
+gb_color = apply_reddening(color_gb_phase, extinction)
+
+cutoff_rhb = np.where(cutoff & photometry_gc['RHB'] == True)[0]
+color_rhb_phase = apply_evolutionary_phase_mask(color, cutoff_rhb)
+rhb_color = apply_reddening(color_rhb_phase, extinction)
+
+cutoff_bs = np.where(cutoff & photometry_gc['BS'] == True)[0]
+color_bs_phase = apply_evolutionary_phase_mask(color, cutoff_bs)
+bs_color = apply_reddening(color_bs_phase, extinction)
+
+cutoff_bhb = np.where(cutoff & photometry_gc['BHB'] == True)[0]
+color_bhb_phase = apply_evolutionary_phase_mask(color, cutoff_bhb)
+bhb_color = apply_reddening(color_bhb_phase, extinction)
+
+cutoff_ehb = np.where(cutoff & photometry_gc['EHB'] == True)[0]
+color_ehb_phase = apply_evolutionary_phase_mask(color, cutoff_ehb)
+ehb_color = apply_reddening(color_ehb_phase, extinction)
+
