@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 
 import plot_CMDs as cmd
+import plot_color_color as ccd
 import functions as apply
 
 import sys
@@ -15,7 +16,6 @@ from photoColors import calculate_colors
 nameGC = 'NGC2808'
 color_excess_B_V = 0.22
 path = '../SSPmodels/subsets_hugs_ngc2808_meth1.txt'
-
 print("Globular Cluster: %s \n" %nameGC)
 
 photometry_gc = pd.read_csv(path, engine='python', comment='#',
@@ -37,7 +37,6 @@ extinction = compute_color_extinction(color_excess_B_V)
 print("\n Calculating photometric colors from HST")
 color = calculate_colors(photometry_gc)
 
-
 cutoff = (photometry_gc['P'] > 90) & \
          (photometry_gc['RMSF275W'] < 0.07) & \
          (photometry_gc['RMSF336W'] < 0.05) & \
@@ -46,35 +45,38 @@ cutoff = (photometry_gc['P'] > 90) & \
          (photometry_gc['RMSF814W'] < 0.03) & \
          (photometry_gc['F438W']!=99.9999)
 
-
 ms_color, ms_mag = apply.color_magnitude(photometry_gc, 'MS', cutoff,\
                                          color, reddening, extinction)
-
 
 gb_color, gb_mag = apply.color_magnitude(photometry_gc, 'GB', cutoff,\
                                          color, reddening, extinction)
 
-
 rhb_color, rhb_mag = apply.color_magnitude(photometry_gc, 'RHB', cutoff,\
                                          color, reddening, extinction)
-
 
 bs_color, bs_mag = apply.color_magnitude(photometry_gc, 'BS', cutoff,\
                                          color, reddening, extinction)
 
-
 bhb_color, bhb_mag = apply.color_magnitude(photometry_gc, 'BHB', cutoff,\
                                          color, reddening, extinction)
-
 
 ehb_color, ehb_mag = apply.color_magnitude(photometry_gc, 'EHB', cutoff,\
                                          color, reddening, extinction)
 
+#print("\n Plotting CMD: \n")
+#cmd.plot_color_magnitude_diagram(ms_color, ms_mag, \
+#                                 gb_color, gb_mag, \
+#                                 rhb_color,rhb_mag,\
+#                                 bs_color, bs_mag, \
+#                                 bhb_color,bhb_mag,\
+#                                 ehb_color,ehb_mag,\
+#                                 './', nameGC)
 
-cmd.plot_color_magnitude_diagram(ms_color, ms_mag, \
-                                 gb_color, gb_mag, \
-                                 rhb_color,rhb_mag,\
-                                 bs_color, bs_mag, \
-                                 bhb_color,bhb_mag,\
-                                 ehb_color,ehb_mag,\
-                                 './', nameGC)
+print("\n Plotting color-color diagram: \n")
+ccd.plot_color_color_diagram(ms_color, \
+                             gb_color, \
+                             rhb_color,\
+                             bs_color, \
+                             bhb_color,\
+                             ehb_color,\
+                             './', nameGC)
