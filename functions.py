@@ -18,10 +18,10 @@ def evolutionary_phase_mask(mag, cutoff):
 def reddening(mag, reddening):
 
     obs_mag = pd.DataFrame()
-    obs_mag['F275W'] = mag['F275W'] - reddening['F275W']
-    obs_mag['F336W'] = mag['F336W'] - reddening['F336W']
-    obs_mag['F438W'] = mag['F438W'] - reddening['F438W']
-    obs_mag['F606W'] = mag['F606W'] - reddening['F606W']
-    obs_mag['F814W'] = mag['F814W'] - reddening['F814W']
+    obs_mag['F275W'] = mag['F275W'] - reddening[0]
+    obs_mag['F336W'] = mag['F336W'] - reddening[1]
+    obs_mag['F438W'] = mag['F438W'] - reddening[2]
+    obs_mag['F606W'] = mag['F606W'] - reddening[3]
+    obs_mag['F814W'] = mag['F814W'] - reddening[4]
 
     return obs_mag
