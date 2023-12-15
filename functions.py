@@ -1,6 +1,10 @@
 import numpy as np
 import pandas as pd
-import extinction 
+
+import sys
+sys.path.append('../SSPmodels/codeModule/utilsSpecMod/')
+from photoColors import apply_evolutionary_phase_mask
+from photoColors import apply_reddening
 
 
 def evolutionary_phase_mask(mag, cutoff):
@@ -15,7 +19,7 @@ def evolutionary_phase_mask(mag, cutoff):
     return mag_evolutionary_phase
   
 
-def reddening(mag, reddening):
+def dereddening(mag, reddening):
 
     obs_mag = pd.DataFrame()
     obs_mag['F275W'] = mag['F275W'] - reddening[0]
@@ -25,3 +29,16 @@ def reddening(mag, reddening):
     obs_mag['F814W'] = mag['F814W'] - reddening[4]
 
     return obs_mag
+
+
+
+def color_magnitude(photometry_gc, phase, cutoff,\
+                    color_input, reddening, extinction):
+
+    cutoff_phase = np.where(cutoff & photometry_gc[phase] == True)[0]
+    color_phase = apply_evolutionary_phase_mask(color_input, cutoff_phase)
+    color = apply_reddening(color_phase, extinction)
+    mag_phase = evolutionary_phase_mask(photometry_gc, cutoff_phase)
+    mag = dereddening(mag_phase,reddening)
+
+    return color, mag
