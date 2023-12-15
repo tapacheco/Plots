@@ -13,9 +13,10 @@ from photoColors import get_reddening
 from photoColors import compute_color_extinction 
 from photoColors import calculate_colors
 
-nameGC = 'NGC2808'
-color_excess_B_V = 0.22
-path = '../SSPmodels/subsets_hugs_ngc2808_meth1.txt'
+nameGC = 'NGC7089'
+color_excess_B_V = 0.06
+path = '../SSPmodels/subsets_hugs_ngc7089_meth1.txt'
+#path = '../SSPmodels/subsets_hugs_ngc2808_meth1.txt'
 print("Globular Cluster: %s \n" %nameGC)
 
 photometry_gc = pd.read_csv(path, engine='python', comment='#',
@@ -63,14 +64,14 @@ bhb_color, bhb_mag = apply.color_magnitude(photometry_gc, 'BHB', cutoff,\
 ehb_color, ehb_mag = apply.color_magnitude(photometry_gc, 'EHB', cutoff,\
                                          color, reddening, extinction)
 
-#print("\n Plotting CMD: \n")
-#cmd.plot_color_magnitude_diagram(ms_color, ms_mag, \
-#                                 gb_color, gb_mag, \
-#                                 rhb_color,rhb_mag,\
-#                                 bs_color, bs_mag, \
-#                                 bhb_color,bhb_mag,\
-#                                 ehb_color,ehb_mag,\
-#                                 './', nameGC)
+print("\n Plotting CMD: \n")
+cmd.plot_color_magnitude_diagram(ms_color, ms_mag, \
+                                 gb_color, gb_mag, \
+                                 rhb_color,rhb_mag,\
+                                 bs_color, bs_mag, \
+                                 bhb_color,bhb_mag,\
+                                 ehb_color,ehb_mag,\
+                                 './', nameGC)
 
 print("\n Plotting color-color diagram: \n")
 ccd.plot_color_color_diagram(ms_color, \
