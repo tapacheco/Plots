@@ -48,6 +48,7 @@ cutoff = (photometry_gc['P'] > 90) & \
          (photometry_gc['RMSF814W'] < 0.03) & \
          (photometry_gc['F438W']!=99.9999)
 
+
 cutoff_ms = np.where(cutoff & photometry_gc['MS'] == True)[0]
 color_ms_phase = apply_evolutionary_phase_mask(color, cutoff_ms)
 ms_color = apply_reddening(color_ms_phase, extinction)
