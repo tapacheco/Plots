@@ -19,6 +19,17 @@ def evolutionary_phase_mask(mag, cutoff):
     return mag_evolutionary_phase
   
 
+def catch_magnitudes(input):
+    
+    mags = pd.DataFrame()
+    mags['F275W'] = input['F275W']
+    mags['F336W'] = input['F336W']
+    mags['F438W'] = input['F438W']
+    mags['F606W'] = input['F606W']
+    mags['F814W'] = input['F814W']
+    return mags
+
+
 def dereddening(mag, reddening):
 
     obs_mag = pd.DataFrame()

@@ -13,14 +13,19 @@ from photoColors import get_reddening
 from photoColors import compute_color_extinction 
 from photoColors import calculate_colors
 
+path = '../SSPmodels/'
 nameGC = 'NGC2808'
 #color_excess_B_V = 0.06
-#path = '../SSPmodels/subsets_hugs_ngc7089_meth1.txt'
+#file = 'subsets_hugs_ngc7089_meth1.txt'
 color_excess_B_V = 0.22
-path = '../SSPmodels/subsets_hugs_ngc2808_meth1.txt'
+file = 'subsets_hugs_ngc2808_meth1.txt'
+
+synthetic_file_coelho = 'syntheticMAGS_Coelho.txt'
+synthetic_file_pacheco = 'syntheticMAGS_EHB_Herich.txt'
+
 print("Globular Cluster: %s" %nameGC)
 
-photometry_gc = pd.read_csv(path, engine='python', comment='#',
+photometry_gc = pd.read_csv(path+file, engine='python', comment='#',
                             skip_blank_lines=True, delim_whitespace=True, 
                             names=['X', 'Y', 
                             'F275W', 'RMSF275W', 'QFITF275W', 'RADXSF275W', 'NfF275W', 'NgF275W', #col 3
@@ -30,6 +35,16 @@ photometry_gc = pd.read_csv(path, engine='python', comment='#',
                             'F814W', 'RMSF814W', 'QFITF814W', 'RADXSF814W', 'NfF814W', 'NgF814W', #col 27
                             'P', 'RA', 'DEC', 'ID', 'ITER', 'MS','GB','RHB','BS','BHB','EHB']) #col 33
 
+synthetic_data_coelho = pd.read_csv(path+synthetic_file_coelho, engine='python', comment='#',
+                            skip_blank_lines=True, sep=',',
+                            names=['mod', 'TEFF', 'LOGG', 'FEH', 
+                                   'F275W', 'F336W', 'F438W', 'F606W', 'F814W', 
+                                   'Int_F275W', 'Int_F336W', 'Int_F438W', 'Int_F606W', 'Int_F814W'])
+synthetic_data_pacheco = pd.read_csv(path+synthetic_file_pacheco, engine='python', comment='#',
+                            skip_blank_lines=True, sep=',',
+                            names=['mod', 'TEFF', 'LOGG', 'FEH', 
+                                   'F275W', 'F336W', 'F438W', 'F606W', 'F814W', 
+                                   'Int_F275W', 'Int_F336W', 'Int_F438W', 'Int_F606W', 'Int_F814W'])
 
 print("Computing color excess")
 print("E(B-V): %s" %color_excess_B_V)
@@ -38,6 +53,10 @@ extinction = compute_color_extinction(color_excess_B_V)
 
 print("\n Calculating photometric colors from HST")
 color = calculate_colors(photometry_gc)
+coelho_color =  calculate_colors(synthetic_data_coelho)
+coelho_mag = apply.catch_magnitudes(synthetic_data_coelho)
+pacheco_color = calculate_colors(synthetic_data_pacheco)
+pacheco_mag = apply.catch_magnitudes(synthetic_data_pacheco)
 
 cutoff = (photometry_gc['P'] > 90) & \
          (photometry_gc['RMSF275W'] < 0.07) & \
@@ -64,6 +83,8 @@ bhb_color, bhb_mag = apply.color_magnitude(photometry_gc, 'BHB', cutoff,\
 
 ehb_color, ehb_mag = apply.color_magnitude(photometry_gc, 'EHB', cutoff,\
                                          color, reddening, extinction)
+
+
 
 print("\n Plotting CMD")
 cmd.plot_color_magnitude_diagram(ms_color, ms_mag, \
