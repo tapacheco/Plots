@@ -13,11 +13,12 @@ from photoColors import get_reddening
 from photoColors import compute_color_extinction 
 from photoColors import calculate_colors
 
-nameGC = 'NGC7089'
-color_excess_B_V = 0.06
-path = '../SSPmodels/subsets_hugs_ngc7089_meth1.txt'
-#path = '../SSPmodels/subsets_hugs_ngc2808_meth1.txt'
-print("Globular Cluster: %s \n" %nameGC)
+nameGC = 'NGC2808'
+#color_excess_B_V = 0.06
+#path = '../SSPmodels/subsets_hugs_ngc7089_meth1.txt'
+color_excess_B_V = 0.22
+path = '../SSPmodels/subsets_hugs_ngc2808_meth1.txt'
+print("Globular Cluster: %s" %nameGC)
 
 photometry_gc = pd.read_csv(path, engine='python', comment='#',
                             skip_blank_lines=True, delim_whitespace=True, 
@@ -30,7 +31,7 @@ photometry_gc = pd.read_csv(path, engine='python', comment='#',
                             'P', 'RA', 'DEC', 'ID', 'ITER', 'MS','GB','RHB','BS','BHB','EHB']) #col 33
 
 
-print("\n Computing color excess")
+print("Computing color excess")
 print("E(B-V): %s" %color_excess_B_V)
 reddening = get_reddening(color_excess_B_V)
 extinction = compute_color_extinction(color_excess_B_V)
@@ -64,7 +65,7 @@ bhb_color, bhb_mag = apply.color_magnitude(photometry_gc, 'BHB', cutoff,\
 ehb_color, ehb_mag = apply.color_magnitude(photometry_gc, 'EHB', cutoff,\
                                          color, reddening, extinction)
 
-print("\n Plotting CMD: \n")
+print("\n Plotting CMD")
 cmd.plot_color_magnitude_diagram(ms_color, ms_mag, \
                                  gb_color, gb_mag, \
                                  rhb_color,rhb_mag,\
@@ -73,7 +74,7 @@ cmd.plot_color_magnitude_diagram(ms_color, ms_mag, \
                                  ehb_color,ehb_mag,\
                                  './', nameGC)
 
-print("\n Plotting color-color diagram: \n")
+print("\n Plotting color-color diagram")
 ccd.plot_color_color_diagram(ms_color, \
                              gb_color, \
                              rhb_color,\
