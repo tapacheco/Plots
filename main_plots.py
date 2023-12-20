@@ -5,6 +5,7 @@ import numpy as np
 
 import plot_CMDs as cmd
 import plot_color_color as ccd
+import plot_density_color_color as den
 import functions as apply
 
 import sys
@@ -14,11 +15,12 @@ from photoColors import compute_color_extinction
 from photoColors import calculate_colors
 
 path = '../SSPmodels/'
-nameGC = 'NGC2808'
-#color_excess_B_V = 0.06
-#file = 'subsets_hugs_ngc7089_meth1.txt'
-color_excess_B_V = 0.22
-file = 'subsets_hugs_ngc2808_meth1.txt'
+nameGC = 'NGC7089'
+color_excess_B_V = 0.06
+file = 'subsets_hugs_ngc7089_meth1.txt'
+#nameGC = 'NGC2808'
+#color_excess_B_V = 0.22
+#file = 'subsets_hugs_ngc2808_meth1.txt'
 
 synthetic_file_coelho = 'syntheticMAGS_Coelho.txt'
 synthetic_file_pacheco = 'syntheticMAGS_EHB_Herich.txt'
@@ -93,14 +95,25 @@ ehb_color, ehb_mag = apply.color_magnitude(photometry_gc, 'EHB', cutoff,\
 #                                bhb_color,bhb_mag,\
 #                                 ehb_color,ehb_mag,\
 #                                 './', nameGC)
+#
+#print("Plotting color-color diagram")
+#ccd.plot_color_color_diagram(ms_color, \
+#                             gb_color, \
+#                             rhb_color,\
+#                             bs_color, \
+#                             bhb_color,\
+#                             ehb_color,\
+#                             coelho_color,  \
+#                             pacheco_color, \
+#                             './', nameGC)
 
-print("Plotting color-color diagram")
-ccd.plot_color_color_diagram(ms_color, \
+print("Plotting other color-color diagram")
+den.plot_density_diagram(ms_color, \
                              gb_color, \
                              rhb_color,\
                              bs_color, \
                              bhb_color,\
                              ehb_color,\
-                             coelho_color, coelho_mag, \
-                             pacheco_color, pacheco_mag, \
+                             coelho_color,  \
+                             pacheco_color, \
                              './', nameGC)

@@ -10,7 +10,7 @@ import seaborn as sns
 from seaborn import jointplot
 
 
-def plot_color_color_diagram(ms_color, \
+def plot_density_diagram(ms_color, \
                              gb_color, \
                              rhb_color,\
                              bs_color, \
@@ -23,17 +23,17 @@ def plot_color_color_diagram(ms_color, \
 
     fig, axs = plt.subplots(sharex=False, figsize=(16,24), tight_layout=False,\
                                 nrows=3, ncols=2)
- 
-    axs[0,0].scatter( ms_color['F275W_F438W'], ms_color['F275W_F336W'], marker='>', s=40, c='#EE7733',label='MS')
-    axs[0,0].scatter( gb_color['F275W_F438W'], gb_color['F275W_F336W'], marker='^', s=40, c='#009988',label='gb')
-    axs[0,0].scatter(rhb_color['F275W_F438W'],rhb_color['F275W_F336W'], marker='<', s=40, c='#CC3311',label='RC')
-    axs[0,0].scatter( bs_color['F275W_F438W'], bs_color['F275W_F336W'], marker='s', s=40, c='#0077BB',label='bs')
-    axs[0,0].scatter(bhb_color['F275W_F438W'],bhb_color['F275W_F336W'], marker='o', s=40, c='#33BBEE',label='HB')
-    axs[0,0].scatter(ehb_color['F275W_F438W'],ehb_color['F275W_F336W'], marker='*', s=40, c='#EE3377',label='EHB')
     axs[0,0].scatter( coelho_color['F275W_F438W'], coelho_color['F275W_F336W'], marker='X', s=40, 
                      facecolors='#BBBBBB', edgecolors='#000000', alpha=0.7)
     axs[0,0].scatter(pacheco_color['F275W_F438W'],pacheco_color['F275W_F336W'], marker='D', s=40, 
                      facecolors='#BBBBBB', edgecolors='#000000', alpha=0.7)
+    sns.kdeplot(data= gb_color, x='F275W_F438W',y='F275W_F336W', color='#009988',fill=True,ax=axs[0,0])
+    sns.kdeplot(data= bs_color, x='F275W_F438W',y='F275W_F336W', color='#0077BB',fill=True,ax=axs[0,0])
+    sns.kdeplot(data= ms_color, x='F275W_F438W',y='F275W_F336W', color='#EE7733',fill=True,ax=axs[0,0])
+    sns.kdeplot(data=rhb_color, x='F275W_F438W',y='F275W_F336W', color='#CC3311',fill=True,ax=axs[0,0])
+    sns.kdeplot(data=bhb_color, x='F275W_F438W',y='F275W_F336W', color='#EE3377',fill=True,ax=axs[0,0])
+    sns.kdeplot(data=ehb_color, x='F275W_F438W',y='F275W_F336W', color='#33BBEE',fill=True,ax=axs[0,0])
+
     axs[0,0].set_xlim(-3.1, 6.1)
     axs[0,0].set_ylim(-1.1, 4.1)
     axs[0,0].set_ylabel('F275W - F336W', fontsize=24)
@@ -46,16 +46,16 @@ def plot_color_color_diagram(ms_color, \
     plt.setp(axs[0,0].get_xticklabels(), fontsize=24)
     plt.setp(axs[0,0].get_yticklabels(), fontsize=24)
 
-    axs[0,1].scatter( ms_color['F275W_F814W'], ms_color['F438W_F814W'], marker='>', s=40, c='#EE7733',label='MS')
-    axs[0,1].scatter( gb_color['F275W_F814W'], gb_color['F438W_F814W'], marker='^', s=40, c='#009988',label='gb')
-    axs[0,1].scatter(rhb_color['F275W_F814W'],rhb_color['F438W_F814W'], marker='<', s=40, c='#CC3311',label='RC')
-    axs[0,1].scatter( bs_color['F275W_F814W'], bs_color['F438W_F814W'], marker='s', s=40, c='#0077BB',label='bs')
-    axs[0,1].scatter(bhb_color['F275W_F814W'],bhb_color['F438W_F814W'], marker='o', s=40, c='#33BBEE',label='HB')
-    axs[0,1].scatter(ehb_color['F275W_F814W'],ehb_color['F438W_F814W'], marker='*', s=40, c='#EE3377',label='EHB')
     axs[0,1].scatter( coelho_color['F275W_F814W'], coelho_color['F438W_F814W'], marker='X', s=40, 
                      facecolors='#BBBBBB', edgecolors='#000000', alpha=0.7)
     axs[0,1].scatter(pacheco_color['F275W_F814W'],pacheco_color['F438W_F814W'],  marker='D', s=40, 
                      facecolors='#BBBBBB', edgecolors='#000000', alpha=0.7)
+    sns.kdeplot(data= gb_color, x='F275W_F814W', y='F438W_F814W', color='#009988',fill=True,ax=axs[0,1])
+    sns.kdeplot(data= bs_color, x='F275W_F814W', y='F438W_F814W', color='#0077BB',fill=True,ax=axs[0,1])
+    sns.kdeplot(data= ms_color, x='F275W_F814W', y='F438W_F814W', color='#EE7733',fill=True,ax=axs[0,1])
+    sns.kdeplot(data=rhb_color, x='F275W_F814W', y='F438W_F814W', color='#CC3311',fill=True,ax=axs[0,1])
+    sns.kdeplot(data=bhb_color, x='F275W_F814W', y='F438W_F814W', color='#EE3377',fill=True,ax=axs[0,1])
+    sns.kdeplot(data=ehb_color, x='F275W_F814W', y='F438W_F814W', color='#33BBEE',fill=True,ax=axs[0,1])
     axs[0,1].set_xlim(-4.3, 9.6)
     axs[0,1].set_ylim(-1.1, 4.1)
     axs[0,1].set_ylabel('F438W - F814W', fontsize=24)
@@ -68,16 +68,16 @@ def plot_color_color_diagram(ms_color, \
     plt.setp(axs[0,1].get_xticklabels(), fontsize=24)
     plt.setp(axs[0,1].get_yticklabels(), fontsize=24)
 
-    axs[1,0].scatter( ms_color['F336W_F606W'], ms_color['F606W_F814W'], marker='>', s=40, c='#EE7733',label='MS')
-    axs[1,0].scatter( gb_color['F336W_F606W'], gb_color['F606W_F814W'], marker='^', s=40, c='#009988',label='gb')
-    axs[1,0].scatter(rhb_color['F336W_F606W'],rhb_color['F606W_F814W'], marker='<', s=40, c='#CC3311',label='RC')
-    axs[1,0].scatter( bs_color['F336W_F606W'], bs_color['F606W_F814W'], marker='s', s=40, c='#0077BB',label='bs')
-    axs[1,0].scatter(bhb_color['F336W_F606W'],bhb_color['F606W_F814W'], marker='o', s=40, c='#33BBEE',label='HB')
-    axs[1,0].scatter(ehb_color['F336W_F606W'],ehb_color['F606W_F814W'], marker='*', s=40, c='#EE3377',label='EHB')
     axs[1,0].scatter( coelho_color['F336W_F606W'], coelho_color['F606W_F814W'], marker='X', s=40, 
                      facecolors='#BBBBBB', edgecolors='#000000', alpha=0.7)
     axs[1,0].scatter(pacheco_color['F336W_F606W'],pacheco_color['F606W_F814W'], marker='D', s=40, 
                      facecolors='#BBBBBB', edgecolors='#000000', alpha=0.7)
+    sns.kdeplot(data= gb_color, x='F336W_F606W',y='F606W_F814W',color='#009988',fill=True,ax=axs[1,0])
+    sns.kdeplot(data= bs_color, x='F336W_F606W',y='F606W_F814W',color='#0077BB',fill=True,ax=axs[1,0])
+    sns.kdeplot(data= ms_color, x='F336W_F606W',y='F606W_F814W',color='#EE7733',fill=True,ax=axs[1,0])
+    sns.kdeplot(data=rhb_color, x='F336W_F606W',y='F606W_F814W',color='#CC3311',fill=True,ax=axs[1,0])
+    sns.kdeplot(data=bhb_color, x='F336W_F606W',y='F606W_F814W',color='#EE3377',fill=True,ax=axs[1,0])
+    sns.kdeplot(data=ehb_color, x='F336W_F606W',y='F606W_F814W',color='#33BBEE',fill=True,ax=axs[1,0])
     axs[1,0].set_xlim(-3.1, 6.1)
     axs[1,0].set_ylim(-.8, 3.1)
     axs[1,0].set_ylabel('F606W - F814W', fontsize=24)
@@ -90,16 +90,16 @@ def plot_color_color_diagram(ms_color, \
     plt.setp(axs[1,0].get_xticklabels(), fontsize=24)
     plt.setp(axs[1,0].get_yticklabels(), fontsize=24)
 
-    axs[1,1].scatter( ms_color['F275W_F606W'], ms_color['F438W_F606W'], marker='>', s=40, c='#EE7733',label='MS')
-    axs[1,1].scatter( gb_color['F275W_F606W'], gb_color['F438W_F606W'], marker='^', s=40, c='#009988',label='gb')
-    axs[1,1].scatter(rhb_color['F275W_F606W'],rhb_color['F438W_F606W'], marker='<', s=40, c='#CC3311',label='RC')
-    axs[1,1].scatter( bs_color['F275W_F606W'], bs_color['F438W_F606W'], marker='s', s=40, c='#0077BB',label='bs')
-    axs[1,1].scatter(bhb_color['F275W_F606W'],bhb_color['F438W_F606W'], marker='o', s=40, c='#33BBEE',label='HB')
-    axs[1,1].scatter(ehb_color['F275W_F606W'],ehb_color['F438W_F606W'], marker='*', s=40, c='#EE3377',label='EHB')
     axs[1,1].scatter( coelho_color['F275W_F606W'], coelho_color['F438W_F606W'], marker='X', s=40, 
                      facecolors='#BBBBBB', edgecolors='#000000', alpha=0.7)
     axs[1,1].scatter(pacheco_color['F275W_F606W'],pacheco_color['F438W_F606W'],  marker='D', s=40, 
                      facecolors='#BBBBBB', edgecolors='#000000', alpha=0.7)
+    sns.kdeplot(data= gb_color, x='F275W_F606W',y='F438W_F606W',color='#009988',fill=True,ax=axs[1,1])
+    sns.kdeplot(data= bs_color, x='F275W_F606W',y='F438W_F606W',color='#0077BB',fill=True,ax=axs[1,1])
+    sns.kdeplot(data= ms_color, x='F275W_F606W',y='F438W_F606W',color='#EE7733',fill=True,ax=axs[1,1])
+    sns.kdeplot(data=rhb_color, x='F275W_F606W',y='F438W_F606W',color='#CC3311',fill=True,ax=axs[1,1])
+    sns.kdeplot(data=bhb_color, x='F275W_F606W',y='F438W_F606W',color='#EE3377',fill=True,ax=axs[1,1])
+    sns.kdeplot(data=ehb_color, x='F275W_F606W',y='F438W_F606W',color='#33BBEE',fill=True,ax=axs[1,1])
     axs[1,1].set_xlim(-4.3, 9.6)
     axs[1,1].set_ylim(-.8, 3.1)
     axs[1,1].set_ylabel('F438W - F606W', fontsize=24)
@@ -112,16 +112,16 @@ def plot_color_color_diagram(ms_color, \
     plt.setp(axs[1,1].get_xticklabels(), fontsize=24)
     plt.setp(axs[1,1].get_yticklabels(), fontsize=24)
 
-    axs[2,0].scatter( ms_color['F336W_F814W'], ms_color['F336W_F438W'], marker='>', s=40, c='#EE7733',label='MS')
-    axs[2,0].scatter( gb_color['F336W_F814W'], gb_color['F336W_F438W'], marker='^', s=40, c='#009988',label='gb')
-    axs[2,0].scatter(rhb_color['F336W_F814W'],rhb_color['F336W_F438W'], marker='<', s=40, c='#CC3311',label='RC')
-    axs[2,0].scatter( bs_color['F336W_F814W'], bs_color['F336W_F438W'], marker='s', s=40, c='#0077BB',label='bs')
-    axs[2,0].scatter(bhb_color['F336W_F814W'],bhb_color['F336W_F438W'], marker='o', s=40, c='#33BBEE',label='HB')
-    axs[2,0].scatter(ehb_color['F336W_F814W'],ehb_color['F336W_F438W'], marker='*', s=40, c='#EE3377',label='EHB')
     axs[2,0].scatter( coelho_color['F336W_F814W'], coelho_color['F336W_F438W'], marker='X', s=40, 
                      facecolors='#BBBBBB', edgecolors='#000000', alpha=0.7)
     axs[2,0].scatter(pacheco_color['F336W_F814W'],pacheco_color['F336W_F438W'], marker='D', s=40, 
                      facecolors='#BBBBBB', edgecolors='#000000', alpha=0.7)
+    sns.kdeplot(data= gb_color, x='F336W_F814W',y='F336W_F438W', color='#009988',fill=True,ax=axs[2,0])
+    sns.kdeplot(data= bs_color, x='F336W_F814W',y='F336W_F438W', color='#0077BB',fill=True,ax=axs[2,0])
+    sns.kdeplot(data= ms_color, x='F336W_F814W',y='F336W_F438W', color='#EE7733',fill=True,ax=axs[2,0])
+    sns.kdeplot(data=rhb_color, x='F336W_F814W',y='F336W_F438W', color='#CC3311',fill=True,ax=axs[2,0])
+    sns.kdeplot(data=bhb_color, x='F336W_F814W',y='F336W_F438W', color='#EE3377',fill=True,ax=axs[2,0])
+    sns.kdeplot(data=ehb_color, x='F336W_F814W',y='F336W_F438W', color='#33BBEE',fill=True,ax=axs[2,0])
     axs[2,0].set_xlim(-3.1, 6.1)
     axs[2,0].set_ylim(-2.2, 2.7)
     axs[2,0].set_ylabel('F336W - F438W', fontsize=24)
@@ -153,4 +153,4 @@ def plot_color_color_diagram(ms_color, \
     plt.setp(axs[2,1].get_yticklabels(), fontsize=24)
 
 
-    plt.savefig(path+'CCD_'+name+'.png', dpi=300, bbox_inches = 'tight')
+    plt.savefig(path+'DensityCCD_'+name+'.png', dpi=300, bbox_inches = 'tight')
