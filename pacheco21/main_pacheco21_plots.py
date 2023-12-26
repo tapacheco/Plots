@@ -1,11 +1,12 @@
 from functions import readModel
+from plot_structure import fig_structure
 import pandas as pd
 
 path_structure = '/Users/tpacheco/Documents/doutorado/plots/structure/'
 
 a_lte_t10000K = readModel(path_structure+"t10g45_solhighHe_lte.7")
 a_nlte_t10000K= readModel(path_structure+"t10g45_solhighHe_nlte.7")
-a_lte_t15000K = readModel(path_structure+"t10g45_solhighHe_nlte.7")
+a_lte_t15000K = readModel(path_structure+"t15g45_solhighHe_lte.7")
 a_nlte_t15000K= readModel(path_structure+"t15g45_solhighHe_nlte.7")
 a_lte_t25000K = readModel(path_structure+"t25g45_solhighHe_lte.7")
 a_nlte_t25000K= readModel(path_structure+"t25g45_solhighHe_nlte.7")
@@ -15,43 +16,25 @@ a_lte_t45000K = readModel(path_structure+"t45g45_solhighHe_lte.7")
 a_nlte_t45000K= readModel(path_structure+"t45g45_solhighHe_nlte.7")
 a_lte_t65000K = readModel(path_structure+"t65g45_solhighHe_lte.7")
 a_nlte_t65000K= readModel(path_structure+"t65g45_solhighHe_nlte.7")
+fig_structure(a_lte_t10000K, a_nlte_t10000K, a_lte_t15000K, a_nlte_t15000K, 
+              a_lte_t25000K, a_nlte_t25000K, a_lte_t35000K, a_nlte_t35000K, 
+              a_lte_t45000K, a_nlte_t45000K, a_lte_t65000K, a_nlte_t65000K,
+              'solhighHe')
 
+b_lte_t10000K = readModel(path_structure+"t10g65_lowZhighHe_lte.7")
+b_nlte_t10000K= readModel(path_structure+"t10g65_lowZhighHe_nlte.7")
+b_lte_t15000K = readModel(path_structure+"t15g65_lowZhighHe_lte.7")
+b_nlte_t15000K= readModel(path_structure+"t15g65_lowZhighHe_nlte.7")
+b_lte_t25000K = readModel(path_structure+"t25g65_lowZhighHe_lte.7")
+b_nlte_t25000K= readModel(path_structure+"t25g65_lowZhighHe_nlte.7")
+b_lte_t35000K = readModel(path_structure+"t35g65_lowZhighHe_lte.7")
+b_nlte_t35000K= readModel(path_structure+"t35g65_lowZhighHe_nlte.7")
+b_lte_t45000K = readModel(path_structure+"t45g65_lowZhighHe_lte.7")
+b_nlte_t45000K= readModel(path_structure+"t45g65_lowZhighHe_nlte.7")
+b_lte_t65000K = readModel(path_structure+"t65g65_lowZhighHe_lte.7")
+b_nlte_t65000K= readModel(path_structure+"t65g65_lowZhighHe_nlte.7")
+fig_structure(b_lte_t10000K, b_nlte_t10000K, b_lte_t15000K, b_nlte_t15000K, 
+              b_lte_t25000K, b_nlte_t25000K, b_lte_t35000K, b_nlte_t35000K, 
+              b_lte_t45000K, b_nlte_t45000K, b_lte_t65000K, b_nlte_t65000K,
+              'lowZhighHe')
 
-b_lte_t10000K = readModel(path_structure+"t10g65_sollowHe_lte.7")
-b_nlte_t10000K= readModel(path_structure+"t10g65_sollowHe_nlte.7")
-b_lte_t15000K = readModel(path_structure+"t15g65_sollowHe_lte.7")
-b_nlte_t15000K= readModel(path_structure+"t15g65_sollowHe_nlte.7")
-b_lte_t25000K = readModel(path_structure+"t25g65_sollowHe_lte.7")
-b_nlte_t25000K= readModel(path_structure+"t25g65_sollowHe_nlte.7")
-b_lte_t35000K = readModel(path_structure+"t35g65_sollowHe_lte.7")
-b_nlte_t35000K= readModel(path_structure+"t35g65_sollowHe_nlte.7")
-b_lte_t45000K = readModel(path_structure+"t45g65_sollowHe_lte.7")
-b_nlte_t45000K= readModel(path_structure+"t45g65_sollowHe_nlte.7")
-b_lte_t65000K = readModel(path_structure+"t65g65_sollowHe_lte.7")
-b_nlte_t65000K= readModel(path_structure+"t65g65_sollowHe_nlte.7")
-
-c_lte_t10000K = readModel(path_structure+"t10g65_lowZhighHe_lte.7")
-c_nlte_t10000K= readModel(path_structure+"t10g65_lowZhighHe_nlte.7")
-c_lte_t15000K = readModel(path_structure+"t15g65_lowZhighHe_lte.7")
-c_nlte_t15000K= readModel(path_structure+"t15g65_lowZhighHe_nlte.7")
-c_lte_t25000K = readModel(path_structure+"t25g65_lowZhighHe_lte.7")
-c_nlte_t25000K= readModel(path_structure+"t25g65_lowZhighHe_nlte.7")
-c_lte_t35000K = readModel(path_structure+"t35g65_lowZhighHe_lte.7")
-c_nlte_t35000K= readModel(path_structure+"t35g65_lowZhighHe_nlte.7")
-c_lte_t45000K = readModel(path_structure+"t45g65_lowZhighHe_lte.7")
-c_nlte_t45000K= readModel(path_structure+"t45g65_lowZhighHe_nlte.7")
-c_lte_t65000K = readModel(path_structure+"t65g65_lowZhighHe_lte.7")
-c_nlte_t65000K= readModel(path_structure+"t65g65_lowZhighHe_nlte.7")
-
-d_lte_t10000K = readModel(path_structure+"t10g65_lowZlowHe_lte.7")
-d_nlte_t10000K= readModel(path_structure+"t10g65_lowZlowHe_nlte.7")
-d_lte_t15000K = readModel(path_structure+"t15g65_lowZlowHe_lte.7")
-d_nlte_t15000K= readModel(path_structure+"t15g65_lowZlowHe_nlte.7")
-d_lte_t25000K = readModel(path_structure+"t25g65_lowZlowHe_lte.7")
-d_nlte_t25000K= readModel(path_structure+"t25g65_lowZlowHe_nlte.7")
-d_lte_t35000K = readModel(path_structure+"t35g65_lowZlowHe_lte.7")
-d_nlte_t35000K= readModel(path_structure+"t35g65_lowZlowHe_nlte.7")
-d_lte_t45000K = readModel(path_structure+"t45g65_lowZlowHe_lte.7")
-d_nlte_t45000K= readModel(path_structure+"t45g65_lowZlowHe_nlte.7")
-d_lte_t65000K = readModel(path_structure+"t65g65_lowZlowHe_lte.7")
-d_nlte_t65000K= readModel(path_structure+"t65g65_lowZlowHe_nlte.7")
