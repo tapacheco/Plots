@@ -19,4 +19,9 @@ def readModel(filename):
         out=np.asarray(outList)
         model=np.transpose(out.flatten().reshape((-1,NUMPAR)))
 
-    return (NDEPTH,NUMPAR,deepPoints,model)
+    data =pd.DataFrame({#'NDEPTH':   NDEPTH,
+           #'NUMPAR':    NUMPAR,
+           'deepPoints':deepPoints,
+           'atmpars':   model[0].flatten()
+           })
+    return data

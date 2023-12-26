@@ -1,19 +1,21 @@
 from functions import readModel
+import pandas as pd
 
 path_structure = '/Users/tpacheco/Documents/doutorado/plots/structure/'
 
-lt10_NDEPTHa,lt10_NUMPARa,lt10_deepPointsa,lt10_atmparsa=readModel(path_structure+"t10g45_solhighHe_lte.7")
-nl10_NDEPTHa,nl10_NUMPARa,nl10_deepPointsa,nl10_atmparsa=readModel(path_structure+"t10g45_solhighHe_nlte.7")
-lt15_NDEPTHa,lt15_NUMPARa,lt15_deepPointsa,lt15_atmparsa=readModel(path_structure+"t15g45_solhighHe_lte.7")
-nl15_NDEPTHa,nl15_NUMPARa,nl15_deepPointsa,nl15_atmparsa=readModel(path_structure+"t15g45_solhighHe_nlte.7")
-lt25_NDEPTHa,lt25_NUMPARa,lt25_deepPointsa,lt25_atmparsa=readModel(path_structure+"t25g45_solhighHe_lte.7")
-nl25_NDEPTHa,nl25_NUMPARa,nl25_deepPointsa,nl25_atmparsa=readModel(path_structure+"t25g45_solhighHe_nlte.7")
-lt35_NDEPTHa,lt35_NUMPARa,lt35_deepPointsa,lt35_atmparsa=readModel(path_structure+"t35g45_solhighHe_lte.7")
-nl35_NDEPTHa,nl35_NUMPARa,nl35_deepPointsa,nl35_atmparsa=readModel(path_structure+"t35g45_solhighHe_nlte.7")
-lt45_NDEPTHa,lt45_NUMPARa,lt45_deepPointsa,lt45_atmparsa=readModel(path_structure+"t45g45_solhighHe_lte.7")
-nl45_NDEPTHa,nl45_NUMPARa,nl45_deepPointsa,nl45_atmparsa=readModel(path_structure+"t45g45_solhighHe_nlte.7")
-lt65_NDEPTHa,lt65_NUMPARa,lt65_deepPointsa,lt65_atmparsa=readModel(path_structure+"t65g45_solhighHe_lte.7")
-nl65_NDEPTHa,nl65_NUMPARa,nl65_deepPointsa,nl65_atmparsa=readModel(path_structure+"t65g45_solhighHe_nlte.7")
+lte_t10000K = readModel(path_structure+"t10g45_solhighHe_lte.7")
+nlte_t10000K= readModel(path_structure+"t10g45_solhighHe_nlte.7")
+lte_t15000K = readModel(path_structure+"t10g45_solhighHe_nlte.7")
+nlte_t15000K= readModel(path_structure+"t15g45_solhighHe_nlte.7")
+lte_t25000K = readModel(path_structure+"t25g45_solhighHe_lte.7")
+nlte_t25000K= readModel(path_structure+"t25g45_solhighHe_nlte.7")
+lte_t35000K = readModel(path_structure+"t35g45_solhighHe_lte.7")
+nlte_t35000K= readModel(path_structure+"t35g45_solhighHe_nlte.7")
+lte_t45000K = readModel(path_structure+"t45g45_solhighHe_lte.7")
+nlte_t45000K= readModel(path_structure+"t45g45_solhighHe_nlte.7")
+lte_t65000K = readModel(path_structure+"t65g45_solhighHe_lte.7")
+nlte_t65000K= readModel(path_structure+"t65g45_solhighHe_nlte.7")
+
 
 lt10_NDEPTHb,lt10_NUMPARb,lt10_deepPointsb,lt10_atmparsb=readModel(path_structure+"t10g65_lowZhighHe_lte.7")
 nl10_NDEPTHb,nl10_NUMPARb,nl10_deepPointsb,nl10_atmparsb=readModel(path_structure+"t10g65_lowZhighHe_nlte.7")
