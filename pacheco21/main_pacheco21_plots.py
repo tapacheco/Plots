@@ -39,10 +39,10 @@ fig_structure(b_lte_t10000K, b_nlte_t10000K, b_lte_t15000K, b_nlte_t15000K,
               b_lte_t45000K, b_nlte_t45000K, b_lte_t65000K, b_nlte_t65000K,
               'lowZhighHe')
 
+b_nlte_t10000K_g45=readModel(path_structure+"t10g45_lowZhighHe_nlte.7")
 b_nlte_t10000K_g55=readModel(path_structure+"t10g55_lowZhighHe_nlte.7")
-b_nlte_t10000K_g65=readModel(path_structure+"t10g65_lowZhighHe_nlte.7")
+b_nlte_t65000K_g45=readModel(path_structure+"t65g45_lowZhighHe_nlte.7")
 b_nlte_t65000K_g55=readModel(path_structure+"t65g55_lowZhighHe_nlte.7")
-b_nlte_t65000K_g65=readModel(path_structure+"t65g65_lowZhighHe_nlte.7")
-fig_density(b_nlte_t10000K, b_nlte_t10000K_g55, b_nlte_t10000K_g65, \
-            b_nlte_t65000K, b_nlte_t65000K_g55, b_nlte_t65000K_g65)
+fig_density(b_nlte_t10000K_g45, b_nlte_t10000K_g55, b_nlte_t10000K, \
+            b_nlte_t65000K_g45, b_nlte_t65000K_g55, b_nlte_t65000K)
 
