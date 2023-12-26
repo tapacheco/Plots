@@ -22,6 +22,8 @@ def readModel(filename):
     data =pd.DataFrame({#'NDEPTH':   NDEPTH,
            #'NUMPAR':    NUMPAR,
            'deepPoints':deepPoints,
-           'atmpars':model[0].flatten()
+           'atmpars': model[0].flatten(),
+           'eletronic_density': model[1].flatten(),
+           'mass_density': model[2].flatten()
            })
     return data

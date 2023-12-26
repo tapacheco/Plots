@@ -1,10 +1,5 @@
 import matplotlib.pyplot as plt
 import matplotlib as mpl
-import matplotlib.cm as cm
-from matplotlib.ticker import (MultipleLocator, FormatStrFormatter, AutoMinorLocator, LogLocator, NullFormatter)
-from mpl_toolkits.axes_grid1 import make_axes_locatable
-from matplotlib import gridspec
-from matplotlib import rc
 import numpy as np
 
 def fig_structure(lte_t10000K, nlte_t10000K, lte_t15000K, nlte_t15000K, lte_t25000K, nlte_t25000K, 
