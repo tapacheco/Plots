@@ -5,26 +5,28 @@ from matplotlib.ticker import (MultipleLocator, FormatStrFormatter, AutoMinorLoc
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 from matplotlib import gridspec
 from matplotlib import rc
+import numpy as np
 
-def fig_structure():
+def fig_structure(lte_t10000K, nlte_t10000K, lte_t15000K, nlte_t15000K, lte_t25000K, nlte_t25000K, 
+                  lte_t35000K, nlte_t35000K, lte_t45000K, nlte_t45000K, lte_t65000K , nlte_t65000K):
     fig, (axa,axb,axc) = plt.subplots(1,3,sharex=False, figsize=(21,7), 
                     gridspec_kw={"width_ratios":[1,1, 0.05],"wspace":0.0})
 
     plt.rcParams["font.family"] = "Times New Roman"
 
     #PARTE A
-    axa.plot(np.log10(lt10_deepPointsa), np.log10(lt10_atmparsa[0]), '.',c='#DCE319FF', label="",linewidth=3.)
-    axa.plot(np.log10(nl10_deepPointsa), np.log10(nl10_atmparsa[0]), '--',c='#DCE319FF', label="",linewidth=3.)
-    axa.plot(np.log10(lt15_deepPointsa), np.log10(lt15_atmparsa[0]), '.',c='#B8DE29FF', label="",linewidth=3.)
-    axa.plot(np.log10(nl15_deepPointsa), np.log10(nl15_atmparsa[0]), '--',c='#B8DE29FF', label="",linewidth=3.)
-    axa.plot(np.log10(lt25_deepPointsa), np.log10(lt25_atmparsa[0]), '.',c='#55C667FF', label="",linewidth=3.)
-    axa.plot(np.log10(nl25_deepPointsa), np.log10(nl25_atmparsa[0]), '--', c='#55C667FF', label="",linewidth=3.)
-    axa.plot(np.log10(lt35_deepPointsa), np.log10(lt35_atmparsa[0]), '.',c='#1F968BFF', label="",linewidth=3.)
-    axa.plot(np.log10(nl35_deepPointsa), np.log10(nl35_atmparsa[0]), '--', c='#1F968BFF', label="",linewidth=3.)
-    axa.plot(np.log10(lt45_deepPointsa), np.log10(lt45_atmparsa[0]), '.',c='#39568CFF', label="",linewidth=3.)
-    axa.plot(np.log10(nl45_deepPointsa), np.log10(nl45_atmparsa[0]), '--', c='#39568CFF', label="",linewidth=3.)
-    axa.plot(np.log10(lt65_deepPointsa), np.log10(lt65_atmparsa[0]), '.',c='#440154FF', label="LTE",linewidth=3.)
-    axa.plot(np.log10(nl65_deepPointsa), np.log10(nl65_atmparsa[0]), '--', c='#440154FF', label="NLTE",linewidth=3.)
+    axa.plot(np.log10(lte_t10000K[deepPoints]), np.log10(lte_t10000K[atmpars]), '.',c='#DCE319FF', label="",linewidth=3.)
+    axa.plot(np.log10(nlte_t10000K[deepPoints]),np.log10(nlte_t10000K[atmpars]), '--',c='#DCE319FF', label="",linewidth=3.)
+    axa.plot(np.log10(lte_t15000K[deepPoints]), np.log10(lte_t15000K[atmpars]), '.',c='#B8DE29FF', label="",linewidth=3.)
+    axa.plot(np.log10(nlte_t15000K[deepPoints]),np.log10(nlte_t15000K[atmpars]), '--',c='#B8DE29FF', label="",linewidth=3.)
+    axa.plot(np.log10(lte_t25000K[deepPoints]), np.log10(lte_t25000K[atmpars]), '.',c='#55C667FF', label="",linewidth=3.)
+    axa.plot(np.log10(nlte_t25000K[deepPoints]),np.log10(nlte_t25000K[atmpars]), '--', c='#55C667FF', label="",linewidth=3.)
+    axa.plot(np.log10(lte_t35000K[deepPoints]), np.log10(lte_t35000K[atmpars]), '.',c='#1F968BFF', label="",linewidth=3.)
+    axa.plot(np.log10(nlte_t35000K[deepPoints]),np.log10(nlte_t35000K[atmpars]), '--', c='#1F968BFF', label="",linewidth=3.)
+    axa.plot(np.log10(lte_t45000K[deepPoints]), np.log10(lte_t45000K[atmpars]), '.',c='#39568CFF', label="",linewidth=3.)
+    axa.plot(np.log10(nlte_t45000K[deepPoints]),np.log10(nlte_t45000K[atmpars]), '--', c='#39568CFF', label="",linewidth=3.)
+    axa.plot(np.log10(lte_t65000K[deepPoints]), np.log10(lte_t65000K[atmpars]), '.',c='#440154FF', label="LTE",linewidth=3.)
+    axa.plot(np.log10(nlte_t65000K[deepPoints]),np.log10(nlte_t65000K[atmpars]), '--', c='#440154FF', label="NLTE",linewidth=3.)
 
     axa.text(2.,3.8, r'(a)', fontsize=20.)
     axa.set_xlim(-7.0,3.0)
