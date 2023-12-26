@@ -4,6 +4,8 @@ import pandas as pd
 import numpy as np
 
 import plot_CMDs as cmd
+import plot_color_color as ccd
+import plot_density_color_color as den
 import functions as apply
 
 import sys
@@ -11,16 +13,21 @@ sys.path.append('../SSPmodels/codeModule/utilsSpecMod/')
 from photoColors import get_reddening
 from photoColors import compute_color_extinction 
 from photoColors import calculate_colors
-from photoColors import apply_evolutionary_phase_mask
-from photoColors import apply_reddening
 
-nameGC = 'NGC2808'
-color_excess_B_V = 0.22
-path = '/Users/tpacheco/Documents/doutorado/code_SSP/SSPmodels/subsets_hugs_ngc2808_meth1.txt'
+path = '../SSPmodels/'
+nameGC = 'NGC7089'
+color_excess_B_V = 0.06
+file = 'subsets_hugs_ngc7089_meth1.txt'
+#nameGC = 'NGC2808'
+#color_excess_B_V = 0.22
+#file = 'subsets_hugs_ngc2808_meth1.txt'
 
-print("Globular Cluster: %s \n" %nameGC)
+synthetic_file_coelho = 'syntheticMAGS_Coelho.txt'
+synthetic_file_pacheco = 'syntheticMAGS_EHB_Herich.txt'
 
-photometry_gc = pd.read_csv(path, engine='python', comment='#',
+print("Globular Cluster: %s" %nameGC)
+
+photometry_gc = pd.read_csv(path+file, engine='python', comment='#',
                             skip_blank_lines=True, delim_whitespace=True, 
                             names=['X', 'Y', 
                             'F275W', 'RMSF275W', 'QFITF275W', 'RADXSF275W', 'NfF275W', 'NgF275W', #col 3
@@ -30,15 +37,28 @@ photometry_gc = pd.read_csv(path, engine='python', comment='#',
                             'F814W', 'RMSF814W', 'QFITF814W', 'RADXSF814W', 'NfF814W', 'NgF814W', #col 27
                             'P', 'RA', 'DEC', 'ID', 'ITER', 'MS','GB','RHB','BS','BHB','EHB']) #col 33
 
+synthetic_data_coelho = pd.read_csv(path+synthetic_file_coelho, engine='python', comment='#',
+                            skip_blank_lines=True, sep=',',
+                            names=['mod', 'TEFF', 'LOGG', 'FEH', 
+                                   'F275W', 'F336W', 'F438W', 'F606W', 'F814W', 
+                                   'Int_F275W', 'Int_F336W', 'Int_F438W', 'Int_F606W', 'Int_F814W'])
+synthetic_data_pacheco = pd.read_csv(path+synthetic_file_pacheco, engine='python', comment='#',
+                            skip_blank_lines=True, sep=',',
+                            names=['mod', 'TEFF', 'LOGG', 'FEH', 
+                                   'F275W', 'F336W', 'F438W', 'F606W', 'F814W', 
+                                   'Int_F275W', 'Int_F336W', 'Int_F438W', 'Int_F606W', 'Int_F814W'])
 
-print("\n Computing color excess")
+print("Computing color excess")
 print("E(B-V): %s" %color_excess_B_V)
 reddening = get_reddening(color_excess_B_V)
 extinction = compute_color_extinction(color_excess_B_V)
 
 print("\n Calculating photometric colors from HST")
-color = calculate_colors(photometry_gc['MS'])
-
+color = calculate_colors(photometry_gc)
+coelho_color =  calculate_colors(synthetic_data_coelho)
+coelho_mag = apply.catch_magnitudes(synthetic_data_coelho)
+pacheco_color = calculate_colors(synthetic_data_pacheco)
+pacheco_mag = apply.catch_magnitudes(synthetic_data_pacheco)
 
 cutoff = (photometry_gc['P'] > 90) & \
          (photometry_gc['RMSF275W'] < 0.07) & \
@@ -48,33 +68,52 @@ cutoff = (photometry_gc['P'] > 90) & \
          (photometry_gc['RMSF814W'] < 0.03) & \
          (photometry_gc['F438W']!=99.9999)
 
-cutoff_ms = np.where(cutoff & photometry_gc['MS'] == True)[0]
-color_ms_phase = apply_evolutionary_phase_mask(color, cutoff_ms)
-ms_color = apply_reddening(color_ms_phase, extinction)
-mag_ms_phase = apply.evolutionary_phase_mask(photometry_gc,cutoff_ms)
-ms_mag = apply.reddening(mag_ms_phase,reddening)
+ms_color, ms_mag = apply.color_magnitude(photometry_gc, 'MS', cutoff,\
+                                         color, reddening, extinction)
 
-cutoff_gb = np.where(cutoff & photometry_gc['GB'] == True)[0]
-color_gb_phase = apply_evolutionary_phase_mask(color, cutoff_gb)
-gb_color = apply_reddening(color_gb_phase, extinction)
+gb_color, gb_mag = apply.color_magnitude(photometry_gc, 'GB', cutoff,\
+                                         color, reddening, extinction)
 
-cutoff_rhb = np.where(cutoff & photometry_gc['RHB'] == True)[0]
-color_rhb_phase = apply_evolutionary_phase_mask(color, cutoff_rhb)
-rhb_color = apply_reddening(color_rhb_phase, extinction)
+rhb_color, rhb_mag = apply.color_magnitude(photometry_gc, 'RHB', cutoff,\
+                                         color, reddening, extinction)
 
-cutoff_bs = np.where(cutoff & photometry_gc['BS'] == True)[0]
-color_bs_phase = apply_evolutionary_phase_mask(color, cutoff_bs)
-bs_color = apply_reddening(color_bs_phase, extinction)
+bs_color, bs_mag = apply.color_magnitude(photometry_gc, 'BS', cutoff,\
+                                         color, reddening, extinction)
 
-cutoff_bhb = np.where(cutoff & photometry_gc['BHB'] == True)[0]
-color_bhb_phase = apply_evolutionary_phase_mask(color, cutoff_bhb)
-bhb_color = apply_reddening(color_bhb_phase, extinction)
+bhb_color, bhb_mag = apply.color_magnitude(photometry_gc, 'BHB', cutoff,\
+                                         color, reddening, extinction)
 
-cutoff_ehb = np.where(cutoff & photometry_gc['EHB'] == True)[0]
-color_ehb_phase = apply_evolutionary_phase_mask(color, cutoff_ehb)
-ehb_color = apply_reddening(color_ehb_phase, extinction)
+ehb_color, ehb_mag = apply.color_magnitude(photometry_gc, 'EHB', cutoff,\
+                                         color, reddening, extinction)
 
 
-cmd.plot_color_magnitude_diagram(ms_color,gb_color,rhb_color, \
-                                 bs_color,bhb_color,ehb_color,\
-                                    './')
+#print("Plotting CMD")
+#cmd.plot_color_magnitude_diagram(ms_color, ms_mag, \
+#                                gb_color, gb_mag, \
+#                                rhb_color,rhb_mag,\
+#                                bs_color, bs_mag, \
+#                                bhb_color,bhb_mag,\
+#                                 ehb_color,ehb_mag,\
+#                                 './', nameGC)
+#
+#print("Plotting color-color diagram")
+#ccd.plot_color_color_diagram(ms_color, \
+#                             gb_color, \
+#                             rhb_color,\
+#                             bs_color, \
+#                             bhb_color,\
+#                             ehb_color,\
+#                             coelho_color,  \
+#                             pacheco_color, \
+#                             './', nameGC)
+
+print("Plotting other color-color diagram")
+den.plot_density_diagram(ms_color, \
+                             gb_color, \
+                             rhb_color,\
+                             bs_color, \
+                             bhb_color,\
+                             ehb_color,\
+                             coelho_color,  \
+                             pacheco_color, \
+                             './', nameGC)

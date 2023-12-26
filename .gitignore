@@ -1,2 +1,7 @@
 *.png
 *.pyc
+
+*.dat
+*.txt
+*xlsx
+
