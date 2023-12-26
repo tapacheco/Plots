@@ -1,0 +1,19 @@
+import sys, argparse
+import pandas as pd
+import pandas.util.testing as tm
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+import matplotlib.cm as cm
+import numpy as np
+import seaborn as sns
+
+from matplotlib.ticker import (MultipleLocator, FormatStrFormatter, AutoMinorLocator, LogLocator, NullFormatter)
+from mpl_toolkits.axes_grid1 import make_axes_locatable
+from matplotlib import gridspec
+from matplotlib import rc
+from scipy import stats
+from scipy import signal
+
+rc('font',**{'family':'serif','serif':['Times New Roman']})
+rc('text', usetex=True)
+
