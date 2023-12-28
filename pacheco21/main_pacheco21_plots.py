@@ -88,12 +88,12 @@ data65B = pd.read_csv(path_spectra+"norm/syB_t65g55_lowZHerich_norm.spec",
 data65R = pd.read_csv(path_spectra+"norm/syR_t65g55_lowZHerich_norm.spec",
                       skip_blank_lines=True,header=None,delim_whitespace=True,names=['wavelength','flux'])
 
-fig_coverage(data10B,data10R,
-                 data15B,data15R,
-                 data20B,data20R,
-                 data25B,data25R,
-                 data30B,data30R,
-                 data35B,data35R,
-                 data45B,data45R,
-                 data65B,data65R
-                 )
+#fig_coverage(data10B,data10R,
+#                 data15B,data15R,
+#                 data20B,data20R,
+#                 data25B,data25R,
+#                 data30B,data30R,
+#                 data35B,data35R,
+#                 data45B,data45R,
+#                 data65B,data65R
+#                 )
