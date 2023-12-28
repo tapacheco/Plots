@@ -5,6 +5,9 @@ from plot_InglisTeler import fig_inglisTeller
 from plot_coverage import fig_coverage
 from plot_UV import fig_UV
 from plot_visible import fig_visible
+from plot_spectrum_25000 import fig_compare25
+from plot_spectrum_45000 import fig_compare45
+from plot_spectrum_optic import fig_compare
 import pandas as pd
 
 path_structure = '/Users/tpacheco/Documents/doutorado/plots/structure/'
@@ -127,8 +130,25 @@ data65B = pd.read_csv(path_spectra+"syB_t65g55_lowZHerich_fwhm5.spec",
 data65R = pd.read_csv(path_spectra+"syR_t65g55_lowZHerich_fwhm5.spec",
                       skip_blank_lines=True,header=None,delim_whitespace=True,names=['wavelength','flux'])
 
-fig_UV(data10B, data15B, data20B, data25B, data30B, data35B, data45B, data65B)
+#fig_UV(data10B, data15B, data20B, data25B, data30B, data35B, data45B, data65B)
 
-fig_visible(data10B,data10R, data15B,data15R, data20B,data20R, data25B,data25R,
-           data30B,data30R, data35B,data35R, data45B,data45R, data65B,data65R )
+#fig_visible(data10B,data10R, data15B,data15R, data20B,data20R, data25B,data25R,
+#           data30B,data30R, data35B,data35R, data45B,data45R, data65B,data65R )
     
+ 
+specStar1 = pd.read_csv("/Users/tpacheco/Documents/doutorado/plots/442708048-flux.dat",
+                      skip_blank_lines=True,header=None,delim_whitespace=True,
+                      names=['wavelength','flux'])
+specMod1 = pd.read_csv("/Users/tpacheco/Documents/doutorado/plots/442708048-modelo-R0.19.dat",
+                      skip_blank_lines=True,header=None,delim_whitespace=True,
+                      names=['wavelength','flux'])
+#fig_compare25(specMod1,specStar1)
+
+specStar2 = pd.read_csv("/Users/tpacheco/Documents/doutorado/plots/183405148-flux.dat",
+                      skip_blank_lines=True,header=None,delim_whitespace=True,names=['wavelength','flux'])
+specMod2 = pd.read_csv("/Users/tpacheco/Documents/doutorado/plots/183405148-modelo-R0.13.dat",
+                      skip_blank_lines=True,header=None,delim_whitespace=True,names=['wavelength','flux'])
+#fig_compare45(specMod2,specStar2)
+
+fig_compare(specMod1,specStar1,specMod2,specStar2)
+
