@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-from scipy import signal
 from matplotlib import gridspec
 
 def fig_compare(specMod1,specStar1,specMod2,specStar2):

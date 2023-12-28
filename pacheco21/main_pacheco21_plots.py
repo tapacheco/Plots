@@ -8,6 +8,7 @@ from plot_visible import fig_visible
 from plot_spectrum_25000 import fig_compare25
 from plot_spectrum_45000 import fig_compare45
 from plot_spectrum_optic import fig_compare
+from plot_spectrum_ultraviolet import fig_compareUV
 import pandas as pd
 
 path_structure = '/Users/tpacheco/Documents/doutorado/plots/structure/'
@@ -152,3 +153,9 @@ specMod2 = pd.read_csv("/Users/tpacheco/Documents/doutorado/plots/183405148-mode
 
 fig_compare(specMod1,specStar1,specMod2,specStar2)
 
+specMod3 = pd.read_csv("/Users/tpacheco/Documents/doutorado/sd26_52.dat",
+                      skip_blank_lines=True,header=None,delim_whitespace=True,names=['wavelength','flux'])
+specStar3 = pd.read_csv("/Users/tpacheco/Documents/doutorado/hd4539_noext20.dat",
+                      skip_blank_lines=True,header=None,delim_whitespace=True,names=['wavelength','flux'])
+
+fig_compareUV(specMod3,specStar3)
