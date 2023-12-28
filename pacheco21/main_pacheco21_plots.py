@@ -2,7 +2,9 @@ from functions import readModel
 from plot_structure import fig_structure 
 from plot_density import fig_density 
 from plot_InglisTeler import fig_inglisTeller
-from coverage import fig_coverage
+from plot_coverage import fig_coverage
+from plot_UV import fig_UV
+from plot_visible import fig_visible
 import pandas as pd
 
 path_structure = '/Users/tpacheco/Documents/doutorado/plots/structure/'
@@ -88,12 +90,45 @@ data65B = pd.read_csv(path_spectra+"norm/syB_t65g55_lowZHerich_norm.spec",
 data65R = pd.read_csv(path_spectra+"norm/syR_t65g55_lowZHerich_norm.spec",
                       skip_blank_lines=True,header=None,delim_whitespace=True,names=['wavelength','flux'])
 
-#fig_coverage(data10B,data10R,
-#                 data15B,data15R,
-#                 data20B,data20R,
-#                 data25B,data25R,
-#                 data30B,data30R,
-#                 data35B,data35R,
-#                 data45B,data45R,
-#                 data65B,data65R
-#                 )
+#fig_coverage(data10B,data10R, data15B,data15R, data20B,data20R, data25B,data25R,
+#             data30B,data30R, data35B,data35R, data45B,data45R, data65B,data65R )
+
+
+data10B = pd.read_csv(path_spectra+"syB_t10g55_lowZHerich_fwhm5.spec",
+                      skip_blank_lines=True,header=None,delim_whitespace=True,names=['wavelength','flux'])
+data10R = pd.read_csv(path_spectra+"syR_t10g55_lowZHerich_fwhm5.spec",
+                      skip_blank_lines=True,header=None,delim_whitespace=True,names=['wavelength','flux'])
+data15B = pd.read_csv(path_spectra+"syB_t15g55_lowZHerich_fwhm5.spec",
+                      skip_blank_lines=True,header=None,delim_whitespace=True,names=['wavelength','flux'])
+data15R = pd.read_csv(path_spectra+"syR_t15g55_lowZHerich_fwhm5.spec",
+                      skip_blank_lines=True,header=None,delim_whitespace=True,names=['wavelength','flux'])
+data20B = pd.read_csv(path_spectra+"syB_t20g55lowZHerich_fwhm5.spec",
+                      skip_blank_lines=True,header=None,delim_whitespace=True,names=['wavelength','flux'])
+data20R = pd.read_csv(path_spectra+"syR_t20g55lowZHerich_fwhm5.spec",
+                      skip_blank_lines=True,header=None,delim_whitespace=True,names=['wavelength','flux'])
+data25B = pd.read_csv(path_spectra+"syB_t25g55_lowZHerich_fwhm5.spec",
+                      skip_blank_lines=True,header=None,delim_whitespace=True,names=['wavelength','flux'])
+data25R = pd.read_csv(path_spectra+"syR_t25g55_lowZHerich_fwhm5.spec",
+                      skip_blank_lines=True,header=None,delim_whitespace=True,names=['wavelength','flux'])
+data30B = pd.read_csv(path_spectra+"syB_t30g55lowZHerich_fwhm5.spec",
+                      skip_blank_lines=True,header=None,delim_whitespace=True,names=['wavelength','flux'])
+data30R = pd.read_csv(path_spectra+"syR_t30g55lowZHerich_fwhm5.spec",
+                      skip_blank_lines=True,header=None,delim_whitespace=True,names=['wavelength','flux'])
+data35B = pd.read_csv(path_spectra+"syB_t35g55_lowZHerich_fwhm5.spec",
+                      skip_blank_lines=True,header=None,delim_whitespace=True,names=['wavelength','flux'])
+data35R = pd.read_csv(path_spectra+"syR_t35g55_lowZHerich_fwhm5.spec",
+                      skip_blank_lines=True,header=None,delim_whitespace=True,names=['wavelength','flux'])
+data45B = pd.read_csv(path_spectra+"syB_t45g55_lowZHerich_fwhm5.spec",
+                      skip_blank_lines=True,header=None,delim_whitespace=True,names=['wavelength','flux'])
+data45R = pd.read_csv(path_spectra+"syR_t45g55_lowZHerich_fwhm5.spec",
+                      skip_blank_lines=True,header=None,delim_whitespace=True,names=['wavelength','flux'])
+data65B = pd.read_csv(path_spectra+"syB_t65g55_lowZHerich_fwhm5.spec",
+                      skip_blank_lines=True,header=None,delim_whitespace=True,names=['wavelength','flux'])
+data65R = pd.read_csv(path_spectra+"syR_t65g55_lowZHerich_fwhm5.spec",
+                      skip_blank_lines=True,header=None,delim_whitespace=True,names=['wavelength','flux'])
+
+fig_UV(data10B, data15B, data20B, data25B, data30B, data35B, data45B, data65B)
+
+fig_visible(data10B,data10R, data15B,data15R, data20B,data20R, data25B,data25R,
+           data30B,data30R, data35B,data35R, data45B,data45R, data65B,data65R )
+    
