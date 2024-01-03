@@ -87,28 +87,17 @@ ehb_color, ehb_mag = apply.color_magnitude(photometry_gc, 'EHB', cutoff,\
                                          color, reddening, extinction)
 
 
-#print("Plotting CMD")
-#cmd.plot_color_magnitude_diagram(ms_color, ms_mag, \
-#                                gb_color, gb_mag, \
-#                                rhb_color,rhb_mag,\
-#                                bs_color, bs_mag, \
-#                                bhb_color,bhb_mag,\
-#                                 ehb_color,ehb_mag,\
-#                                 './', nameGC)
-#
-#print("Plotting color-color diagram")
-#ccd.plot_color_color_diagram(ms_color, \
-#                             gb_color, \
-#                             rhb_color,\
-#                             bs_color, \
-#                             bhb_color,\
-#                             ehb_color,\
-#                             coelho_color,  \
-#                             pacheco_color, \
-#                             './', nameGC)
+print("Plotting CMD")
+cmd.plot_color_magnitude_diagram(ms_color, ms_mag, \
+                                gb_color, gb_mag, \
+                                rhb_color,rhb_mag,\
+                                bs_color, bs_mag, \
+                                bhb_color,bhb_mag,\
+                                 ehb_color,ehb_mag,\
+                                 './', nameGC)
 
-print("Plotting other color-color diagram")
-den.plot_density_diagram(ms_color, \
+print("Plotting color-color diagram")
+ccd.plot_color_color_diagram(ms_color, \
                              gb_color, \
                              rhb_color,\
                              bs_color, \
@@ -117,3 +106,14 @@ den.plot_density_diagram(ms_color, \
                              coelho_color,  \
                              pacheco_color, \
                              './', nameGC)
+
+#print("Plotting other color-color diagram")
+#den.plot_density_diagram(ms_color, \
+#                             gb_color, \
+#                             rhb_color,\
+#                             bs_color, \
+#                             bhb_color,\
+#                             ehb_color,\
+#                             coelho_color,  \
+#                             pacheco_color, \
+#                             './', nameGC)
