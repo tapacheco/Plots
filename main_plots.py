@@ -6,7 +6,9 @@ import numpy as np
 import plot_CMDs as cmd
 import plot_color_color as ccd
 import plot_density_color_color as den
+import plot_spectra as spc
 import functions as apply
+import degrade_resolvingPower as rsp
 
 import sys
 sys.path.append('../SSPmodels/codeModule/utilsSpecMod/')
@@ -15,18 +17,19 @@ from photoColors import compute_color_extinction
 from photoColors import calculate_colors
 
 path = '../SSPmodels/'
-nameGC = 'NGC7089'
-color_excess_B_V = 0.06
-file = 'subsets_hugs_ngc7089_meth1.txt'
-#nameGC = 'NGC2808'
-#color_excess_B_V = 0.22
-#file = 'subsets_hugs_ngc2808_meth1.txt'
+#nameGC = 'NGC7089'
+#color_excess_B_V = 0.06
+#file = 'subsets_hugs_ngc7089_meth1.txt'
+nameGC = 'NGC2808'
+color_excess_B_V = 0.22
+file = 'subsets_hugs_ngc2808_meth1.txt'
 
 synthetic_file_coelho = 'syntheticMAGS_Coelho.txt'
 synthetic_file_pacheco = 'syntheticMAGS_EHB_Herich.txt'
+synthetic_file_castelli = 'syntheticMAGS_Castelli.txt'
 
 print("Globular Cluster: %s" %nameGC)
-
+"""
 photometry_gc = pd.read_csv(path+file, engine='python', comment='#',
                             skip_blank_lines=True, delim_whitespace=True, 
                             names=['X', 'Y', 
@@ -36,7 +39,6 @@ photometry_gc = pd.read_csv(path+file, engine='python', comment='#',
                             'F606W', 'RMSF606W', 'QFITF606W', 'RADXSF606W', 'NfF606W', 'NgF606W', #col 21
                             'F814W', 'RMSF814W', 'QFITF814W', 'RADXSF814W', 'NfF814W', 'NgF814W', #col 27
                             'P', 'RA', 'DEC', 'ID', 'ITER', 'MS','GB','RHB','BS','BHB','EHB']) #col 33
-
 synthetic_data_coelho = pd.read_csv(path+synthetic_file_coelho, engine='python', comment='#',
                             skip_blank_lines=True, sep=',',
                             names=['mod', 'TEFF', 'LOGG', 'FEH', 
@@ -47,6 +49,55 @@ synthetic_data_pacheco = pd.read_csv(path+synthetic_file_pacheco, engine='python
                             names=['mod', 'TEFF', 'LOGG', 'FEH', 
                                    'F275W', 'F336W', 'F438W', 'F606W', 'F814W', 
                                    'Int_F275W', 'Int_F336W', 'Int_F438W', 'Int_F606W', 'Int_F814W'])
+param_ms = pd.read_csv(path+nameGC+'_ms_param.dat', engine='python', comment='#', skip_blank_lines=True, 
+                       sep='\t', names=['F275W', 'F336W', 'F438W', 'F606W', 'F814W',
+                                       'F275W_F336W', 'F275W_F438W', 'F275W_F606W', 'F275W_F814W', 
+                                       'F336W_F438W', 'F336W_F606W', 'F336W_F814W', 'F438W_F606W', 
+                                       'F438W_F814W', 'F606W_F814W', 'distance', 'index', 
+                                       'TEFF', 'LOG_G'])
+distance_ms = param_ms['distance'][1:]
+param_gb = pd.read_csv(path+nameGC+'_gb_param.dat', engine='python', comment='#', skip_blank_lines=True, 
+                       sep='\t', names=['F275W', 'F336W', 'F438W', 'F606W', 'F814W',
+                                       'F275W_F336W', 'F275W_F438W', 'F275W_F606W', 'F275W_F814W', 
+                                       'F336W_F438W', 'F336W_F606W', 'F336W_F814W', 'F438W_F606W', 
+                                       'F438W_F814W', 'F606W_F814W', 'distance', 'index', 
+                                       'TEFF', 'LOG_G'])
+distance_gb = param_ms['distance'][1:]
+param_rhb = pd.read_csv(path+nameGC+'_rhb_param.dat', engine='python', comment='#', skip_blank_lines=True, 
+                       sep='\t', names=['F275W', 'F336W', 'F438W', 'F606W', 'F814W',
+                                       'F275W_F336W', 'F275W_F438W', 'F275W_F606W', 'F275W_F814W', 
+                                       'F336W_F438W', 'F336W_F606W', 'F336W_F814W', 'F438W_F606W', 
+                                       'F438W_F814W', 'F606W_F814W', 'distance', 'index', 
+                                       'TEFF', 'LOG_G'])
+distance_rhb = param_ms['distance'][1:]
+param_bs = pd.read_csv(path+nameGC+'_bs_param.dat', engine='python', comment='#', skip_blank_lines=True, 
+                       sep='\t', names=['F275W', 'F336W', 'F438W', 'F606W', 'F814W',
+                                       'F275W_F336W', 'F275W_F438W', 'F275W_F606W', 'F275W_F814W', 
+                                       'F336W_F438W', 'F336W_F606W', 'F336W_F814W', 'F438W_F606W', 
+                                       'F438W_F814W', 'F606W_F814W', 'distance', 'index', 
+                                       'TEFF', 'LOG_G'])
+distance_bs = param_ms['distance'][1:]
+param_bhb = pd.read_csv(path+nameGC+'_bhb_param.dat', engine='python', comment='#', skip_blank_lines=True, 
+                       sep='\t', names=['F275W', 'F336W', 'F438W', 'F606W', 'F814W',
+                                       'F275W_F336W', 'F275W_F438W', 'F275W_F606W', 'F275W_F814W', 
+                                       'F336W_F438W', 'F336W_F606W', 'F336W_F814W', 'F438W_F606W', 
+                                       'F438W_F814W', 'F606W_F814W', 'distance', 'index', 
+                                       'TEFF', 'LOG_G'])
+distance_bhb = param_ms['distance'][1:]
+param_ehb = pd.read_csv(path+nameGC+'_ehb_param.dat', engine='python', comment='#', skip_blank_lines=True, 
+                       sep='\t', header=1, names=['F275W', 'F336W', 'F438W', 'F606W', 'F814W',
+                                       'F275W_F336W', 'F275W_F438W', 'F275W_F606W', 'F275W_F814W', 
+                                       'F336W_F438W', 'F336W_F606W', 'F336W_F814W', 'F438W_F606W', 
+                                       'F438W_F814W', 'F606W_F814W', 'distance', 'index', 
+                                       'TEFF', 'LOG_G'])
+distance_ehb = param_ms['distance'][1:]
+
+distances = pd.DataFrame({'ms': distance_ms,
+                          'gb': distance_gb, 
+                          'rhb':distance_rhb, 
+                          'bs': distance_bs, 
+                          'bhb':distance_bhb, 
+                          'ehb':distance_ehb})
 
 print("Computing color excess")
 print("E(B-V): %s" %color_excess_B_V)
@@ -105,15 +156,53 @@ ccd.plot_color_color_diagram(ms_color, \
                              ehb_color,\
                              coelho_color,  \
                              pacheco_color, \
+                             distances, \
                              './', nameGC)
 
-#print("Plotting other color-color diagram")
-#den.plot_density_diagram(ms_color, \
-#                             gb_color, \
-#                             rhb_color,\
-#                             bs_color, \
-#                             bhb_color,\
-#                             ehb_color,\
-#                             coelho_color,  \
-#                             pacheco_color, \
-#                             './', nameGC)
+print("Plotting other color-color diagram")
+den.plot_density_diagram(ms_color, \
+                             gb_color, \
+                             rhb_color,\
+                             bs_color, \
+                             bhb_color,\
+                             ehb_color,\
+                             coelho_color,  \
+                             pacheco_color, \
+                             './', nameGC)
+
+ms_spectrum = pd.read_csv(path+nameGC+'_ms_spectrum.dat', engine='python', comment='#',
+                          skip_blank_lines=True, delim_whitespace=True,  header=1,
+                          names=['wavelength', 'flux'])
+gb_spectrum = pd.read_csv(path+nameGC+'_gb_spectrum.dat', engine='python', comment='#',
+                          skip_blank_lines=True, delim_whitespace=True,  header=1,
+                          names=['wavelength', 'flux'])
+rhb_spectrum = pd.read_csv(path+nameGC+'_rhb_spectrum.dat', engine='python', comment='#',
+                          skip_blank_lines=True, delim_whitespace=True,  header=1,
+                          names=['wavelength', 'flux'])
+bs_spectrum = pd.read_csv(path+nameGC+'_bs_spectrum.dat', engine='python', comment='#',
+                          skip_blank_lines=True, delim_whitespace=True,  header=1,
+                          names=['wavelength', 'flux'])
+bhb_spectrum = pd.read_csv(path+nameGC+'_bhb_spectrum.dat', engine='python', comment='#',
+                          skip_blank_lines=True, delim_whitespace=True,  header=1,
+                          names=['wavelength', 'flux'])
+ehb_spectrum = pd.read_csv(path+nameGC+'_ehb_spectrum.dat', engine='python', comment='#',
+                          skip_blank_lines=True, delim_whitespace=True,  header=1,
+                          names=['wavelength', 'flux'])
+
+
+ms_spectrum =  rsp.degrade_resolving_power(path+nameGC+'_ms_spectrum.dat', 1000)
+gb_spectrum =  rsp.degrade_resolving_power(path+nameGC+'_gb_spectrum.dat', 1000)
+rhb_spectrum = rsp.degrade_resolving_power(path+nameGC+'_rhb_spectrum.dat',1000)
+bs_spectrum =  rsp.degrade_resolving_power(path+nameGC+'_bs_spectrum.dat', 1000)
+bhb_spectrum = rsp.degrade_resolving_power(path+nameGC+'_bhb_spectrum.dat',1000)
+ehb_spectrum = rsp.degrade_resolving_power(path+nameGC+'_ehb_spectrum.dat',1000)
+
+
+spc.plot_evolutionary_SSP(ms_spectrum['wavelength'], 
+                          gb_spectrum['flux'], 
+                          ms_spectrum['flux'], 
+                          rhb_spectrum['flux'], 
+                          bs_spectrum['flux'], 
+                          bhb_spectrum['flux'], 
+                          ehb_spectrum['flux'], './'+nameGC)
+"""

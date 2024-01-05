@@ -18,6 +18,7 @@ def plot_color_color_diagram(ms_color, \
                              ehb_color,\
                              coelho_color, \
                              pacheco_color, \
+                             distance, \
                              path, name):
     xmin, xmax, ymin, ymax = (-4.2, 10.2, -2.2, 3.2)
 
@@ -134,17 +135,22 @@ def plot_color_color_diagram(ms_color, \
     plt.setp(axs[2,0].get_xticklabels(), fontsize=24)
     plt.setp(axs[2,0].get_yticklabels(), fontsize=24)
 
-    axs[2,1].scatter(0,0, marker='o', s=40, alpha=0.25,  c='#cccc00',label='MS')
-    axs[2,1].scatter(0,0, marker='o', s=40, alpha=0.25,  c='#00cccc',label='gb')
-    axs[2,1].scatter(0,0, marker='o', s=40, alpha=0.25,  c='#800080',label='HB')
-    axs[2,1].scatter(0,0, marker='o', s=40, alpha=0.25,  c='#ff00ff',label='EHB')
-    axs[2,1].scatter(0,0, marker='o', s=40, alpha=0.25,  c='#0000ff',label='bs')
-    axs[2,1].scatter(0,0, marker='o', s=40, alpha=0.25,  c='#ff0000',label='RC')
-    axs[2,1].set_xlim(xmin, xmax)
-    axs[2,1].set_ylim(ymin, ymax)
+ #   sns.histplot(data=distance, x='ms', color='#EE7733', ax=axs[2,1], 
+ #                binwidth=0.1, element = "step", label='MS')
+#    sns.histplot(data=distance, x='gb', alpha=0.25, color='#009988', ax=axs[2,1], kde=True, 
+#                 binwidth=0.1, element = "step", label='GB')
+#    sns.histplot(data=distance, x='rhb',alpha=0.25, color='#CC3311', ax=axs[2,1], kde=True, 
+#                 binwidth=0.1, element = "step", label='RHB')
+#    sns.histplot(data=distance, x='bs', alpha=0.25, color='#0077BB', ax=axs[2,1], kde=True, 
+#                 binwidth=0.1, element = "step", label='BS')
+#    sns.histplot(data=distance, x='bhb',alpha=0.25, color='#33BBEE', ax=axs[2,1], kde=True, 
+#                 binwidth=0.1, element = "step", label='BHB')
+    sns.histplot(data=distance, x='ehb',alpha=0.25, color='#EE3377', ax=axs[2,1], kde=True, 
+                 binwidth=0.1, element = "step", label='EHB')
     axs[2,1].set_ylabel('', fontsize=24)
     axs[2,1].set_xlabel('', fontsize=24)
     axs[2,1].minorticks_on()
+    axs[2,1].set_xlim(0, 5)  
     axs[2,1].tick_params(direction='in', which='major', length=8, width=1.5, \
                     bottom=True, top=True, left=True, right=True, labelsize=26)
     axs[2,1].tick_params(direction='in', which='minor', length=5, width=1.2, \
