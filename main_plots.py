@@ -22,12 +22,12 @@ from photoColors import compute_color_extinction
 from photoColors import calculate_colors
 
 path = '../SSPmodels/'
-nameGC = 'NGC7089'
-color_excess_B_V = 0.06
-file = 'subsets_hugs_ngc7089_meth1.txt'
-#nameGC = 'NGC2808'
-#color_excess_B_V = 0.22
-#file = 'subsets_hugs_ngc2808_meth1.txt'
+#nameGC = 'NGC7089'
+#color_excess_B_V = 0.06
+#file = 'subsets_hugs_ngc7089_meth1.txt'
+nameGC = 'NGC2808'
+color_excess_B_V = 0.22
+file = 'subsets_hugs_ngc2808_meth1.txt'
 
 synthetic_file_coelho = 'syntheticMAGS_Coelho.txt'
 synthetic_file_pacheco = 'syntheticMAGS_EHB_Herich.txt'
@@ -174,7 +174,7 @@ den.plot_density_diagram(ms_color, \
                              coelho_color,  \
                              pacheco_color, \
                              './', nameGC)
-"""
+
 
 #ms_spectrum =  rsp.degrade_resolving_power(path+nameGC+'_ms_spectrum.dat', 1000)
 #gb_spectrum =  rsp.degrade_resolving_power(path+nameGC+'_gb_spectrum.dat', 1000)
@@ -202,8 +202,6 @@ ehb_spectrum = pd.read_csv(path+nameGC+'_ehb_spectrum.dat', engine='python', com
                           skip_blank_lines=True, delim_whitespace=True,  header=1,
                           names=['wavelength', 'flux'])
 
-
-
 spc.plot_evolutionary_SSP(ms_spectrum['wavelength'], 
                           gb_spectrum['flux'], 
                           ms_spectrum['flux'], 
@@ -211,79 +209,87 @@ spc.plot_evolutionary_SSP(ms_spectrum['wavelength'],
                           bs_spectrum['flux'], 
                           bhb_spectrum['flux'], 
                           ehb_spectrum['flux'], './'+nameGC)
+"""
+base_ssp =rsp.degrade_resolving_power(path+nameGC+'_base_ssp.dat', 1000)
+bs_ssp   = rsp.degrade_resolving_power(path+nameGC+'_bs_ssp.dat',  1000)
+bhb_ssp  = rsp.degrade_resolving_power(path+nameGC+'_bhb_ssp.dat', 1000)
+ehb_ssp  = rsp.degrade_resolving_power(path+nameGC+'_ehb_ssp.dat', 1000)
+total_ssp=rsp.degrade_resolving_power(path+nameGC+'_total_ssp.dat',1000)
 
-#base_ssp =rsp.degrade_resolving_power(path+nameGC+'_base_ssp.dat', 500)
-#bs_ssp   = rsp.degrade_resolving_power(path+nameGC+'_bs_ssp.dat',  500)
-#bhb_ssp  = rsp.degrade_resolving_power(path+nameGC+'_bhb_ssp.dat', 500)
-#ehb_ssp  = rsp.degrade_resolving_power(path+nameGC+'_ehb_ssp.dat', 500)
-#total_ssp=rsp.degrade_resolving_power(path+nameGC+'_total_ssp.dat',500)
+#cpr.plot_ssp_compare(base_ssp['wavelength'], base_ssp['flux'], bs_ssp['flux'], 
+#                     bhb_ssp['flux'], ehb_ssp['flux'], total_ssp['flux'], './'+nameGC)
 
-base_ssp = pd.read_csv(path+nameGC+'_base_ssp.dat', engine='python', comment='#',
-                          skip_blank_lines=True, delim_whitespace=True,  header=1,
-                          names=['wavelength', 'flux'])
-bs_ssp = pd.read_csv(path+nameGC+'_bs_ssp.dat', engine='python', comment='#',
-                          skip_blank_lines=True, delim_whitespace=True,  header=1,
-                          names=['wavelength', 'flux'])
-bhb_ssp = pd.read_csv(path+nameGC+'_bhb_ssp.dat', engine='python', comment='#',
-                          skip_blank_lines=True, delim_whitespace=True,  header=1,
-                          names=['wavelength', 'flux'])
-ehb_ssp = pd.read_csv(path+nameGC+'_ehb_ssp.dat', engine='python', comment='#',
-                          skip_blank_lines=True, delim_whitespace=True,  header=1,
-                          names=['wavelength', 'flux'])
-total_ssp = pd.read_csv(path+nameGC+'_total_ssp.dat', engine='python', comment='#',
-                          skip_blank_lines=True, delim_whitespace=True,  header=1,
-                          names=['wavelength', 'flux'])
-
-cpr.plot_ssp_compare(base_ssp['wavelength'], base_ssp['flux'], bs_ssp['flux'], 
-                     bhb_ssp['flux'], ehb_ssp['flux'], total_ssp['flux'], './'+nameGC)
-
-Av = 3.1*color_excess_B_V
-print('Av = %f'%Av)
-import extinction 
-iue1_m2_A = pd.read_csv('/Users/tpacheco/Documents/doutorado/ARI_LJMU/ngc7089_IUE_lr12220',
-                        skip_blank_lines=True,header=18,engine='python',delim_whitespace=True, 
-                        names=['wavelength','flux','sigma','back','net','quali'])
-iue1_f_m2 = np.array(iue1_m2_A['flux'])
-iue1_w_m2 = np.array(iue1_m2_A['wavelength'])
-iue1_flux_deredden = remove(extinction.fm07(iue1_w_m2, Av), iue1_f_m2)
-iue2_m2_A = pd.read_csv('/Users/tpacheco/Documents/doutorado/ARI_LJMU/ngc7089_IUE_sp10171',
-                        skip_blank_lines=True,header=18,engine='python',delim_whitespace=True, 
-                        names=['wavelength','flux','sigma','back','net','quali'])
-iue2_f_m2 = np.array(iue2_m2_A['flux'])
-iue2_w_m2 = np.array(iue2_m2_A['wavelength'])
-iue2_flux_deredden = remove(extinction.fm07(iue2_w_m2, Av), iue2_f_m2)
-iue3_m2_A = pd.read_csv('/Users/tpacheco/Documents/doutorado/ARI_LJMU/ngc7089_IUE_sp15885',
-                        skip_blank_lines=True,header=18,engine='python',delim_whitespace=True, 
-                        names=['wavelength','flux','sigma','back','net','quali'])
-iue3_f_m2 = np.array(iue3_m2_A['flux'])
-iue3_w_m2 = np.array(iue3_m2_A['wavelength'])
-iue3_flux_deredden = remove(extinction.fm07(iue3_w_m2, Av), iue3_f_m2)
-
-file = '/Users/tpacheco/Documents/doutorado/ARI_LJMU/schiavon05/List/NGC7089_a_1.fits'
-hdr = fits.getheader(file)
-schi05_f_m2_A = fits.getdata(file) 
-nfhr=len(schi05_f_m2_A)
-crval, cdelt = (hdr['CRVAL1'], hdr['CD1_1']) 
-schi05_w_m2 = crval + (cdelt*np.arange(0,nfhr)) #HR
-schi05_flux_deredden = extinction.remove(extinction.fm07(schi05_w_m2, Av), schi05_f_m2_A)
-
-#file = '/Users/tpacheco/Documents/doutorado/ARI_LJMU/schiavon05/List/NGC2808_a_1.fits'
+#base_ssp = pd.read_csv(path+nameGC+'_base_ssp.dat', engine='python', comment='#',
+#                          skip_blank_lines=True, delim_whitespace=True,  header=1,
+#                          names=['wavelength', 'flux'])
+#bs_ssp = pd.read_csv(path+nameGC+'_bs_ssp.dat', engine='python', comment='#',
+#                          skip_blank_lines=True, delim_whitespace=True,  header=1,
+#                          names=['wavelength', 'flux'])
+#bhb_ssp = pd.read_csv(path+nameGC+'_bhb_ssp.dat', engine='python', comment='#',
+#                          skip_blank_lines=True, delim_whitespace=True,  header=1,
+#                          names=['wavelength', 'flux'])
+#ehb_ssp = pd.read_csv(path+nameGC+'_ehb_ssp.dat', engine='python', comment='#',
+#                          skip_blank_lines=True, delim_whitespace=True,  header=1,
+#                          names=['wavelength', 'flux'])
+#total_ssp = pd.read_csv(path+nameGC+'_total_ssp.dat', engine='python', comment='#',
+#                          skip_blank_lines=True, delim_whitespace=True,  header=1,
+#                          names=['wavelength', 'flux'])
+#
+#Av = 3.1*color_excess_B_V
+#print('Av = %f'%Av)
+#import extinction 
+#iue1_m2_A = pd.read_csv('/Users/tpacheco/Documents/doutorado/ARI_LJMU/ngc7089_IUE_lr12220',
+#                        skip_blank_lines=True,header=18,engine='python',delim_whitespace=True, 
+#                        names=['wavelength','flux','sigma','back','net','quali'])
+#iue1_f_m2 = np.array(iue1_m2_A['flux'])
+#iue1_w_m2 = np.array(iue1_m2_A['wavelength'])
+#iue1_flux_deredden = remove(extinction.fm07(iue1_w_m2, Av), iue1_f_m2)
+#iue2_m2_A = pd.read_csv('/Users/tpacheco/Documents/doutorado/ARI_LJMU/ngc7089_IUE_sp10171',
+#                        skip_blank_lines=True,header=18,engine='python',delim_whitespace=True, 
+#                        names=['wavelength','flux','sigma','back','net','quali'])
+#iue2_f_m2 = np.array(iue2_m2_A['flux'])
+#iue2_w_m2 = np.array(iue2_m2_A['wavelength'])
+#iue2_flux_deredden = remove(extinction.fm07(iue2_w_m2, Av), iue2_f_m2)
+#iue3_m2_A = pd.read_csv('/Users/tpacheco/Documents/doutorado/ARI_LJMU/ngc7089_IUE_sp15885',
+#                        skip_blank_lines=True,header=18,engine='python',delim_whitespace=True, 
+#                        names=['wavelength','flux','sigma','back','net','quali'])
+#iue3_f_m2 = np.array(iue3_m2_A['flux'])
+#iue3_w_m2 = np.array(iue3_m2_A['wavelength'])
+#iue3_flux_deredden = remove(extinction.fm07(iue3_w_m2, Av), iue3_f_m2)
+#
+#file = '/Users/tpacheco/Documents/doutorado/ARI_LJMU/schiavon05/List/NGC7089_a_1.fits'
 #hdr = fits.getheader(file)
-#schi05_f_2808_A = fits.getdata(file) 
+#schi05_f_m2_A = fits.getdata(file) 
 #nfhr=len(schi05_f_m2_A)
 #crval, cdelt = (hdr['CRVAL1'], hdr['CD1_1']) 
-#schi05_w_2808 = crval + (cdelt*np.arange(0,nfhr)) #HR
-#schi05_flux_deredden = extinction.remove(extinction.fm07(schi05_w_2808, Av), schi05_flux_deredden)
+#schi05_w_m2 = crval + (cdelt*np.arange(0,nfhr)) #HR
+#schi05_flux_deredden = extinction.remove(extinction.fm07(schi05_w_m2, Av), schi05_f_m2_A)
+#
+#index1 = 149 #np.argmin(np.abs(iue1_w_m2 - 2250))
+#index2 = 423 #np.argmin(np.abs(iue2_w_m2 - 1860))
+#index3 = 422 #np.argmin(np.abs(iue3_w_m2 - 1860))
+#index_S= 3 #np.argmin(np.abs(schi05_w_m2 - 5000))
+#index_ssp = np.argmin(np.abs(base_ssp['wavelength'] - 1860))
+#
+#obs.plot_ssp(total_ssp['wavelength'], total_ssp['flux'], index_ssp,\
+#             schi05_w_m2, schi05_flux_deredden, index_S, \
+#             iue1_w_m2, iue1_flux_deredden, iue1_m2_A['sigma'], index1, \
+#             iue2_w_m2, iue2_flux_deredden, iue2_m2_A['sigma'], index2, \
+#             iue3_w_m2, iue3_flux_deredden, iue3_m2_A['sigma'], index3, \
+#             './'+nameGC)
 
-index1 = np.argmin(np.abs(iue1_w_m2 - 2250))
-index2 = 425 #np.argmin(np.abs(iue2_w_m2 - 1860))
-index3 = 425 #np.argmin(np.abs(iue3_w_m2 - 1860))
-index_S= 4 #np.argmin(np.abs(schi05_w_m2 - 5000))
-index_ssp = np.argmin(np.abs(base_ssp['wavelength'] - 1860))
+Av = 3.1*color_excess_B_V
+import extinction
+file = '/Users/tpacheco/Documents/doutorado/ARI_LJMU/schiavon05/List/NGC2808_a_1.fits'
+hdr = fits.getheader(file)
+schi05_f_2808_A = fits.getdata(file) 
+nfhr=len(schi05_f_2808_A)
+crval, cdelt = (hdr['CRVAL1'], hdr['CD1_1']) 
+schi05_w_2808 = crval + (cdelt*np.arange(0,nfhr)) #HR
+schi05_flux_deredden = extinction.remove(extinction.fm07(schi05_w_2808, Av), schi05_f_2808_A)
+index_S= np.argmin(np.abs(schi05_w_2808 - 4950))
+index_ssp = np.argmin(np.abs(base_ssp['wavelength'] - 4950))
 
 obs.plot_ssp(total_ssp['wavelength'], total_ssp['flux'], index_ssp,\
-             schi05_w_m2, schi05_flux_deredden, index_S, \
-             iue1_w_m2, iue1_flux_deredden, iue1_m2_A['sigma'], index1, \
-             iue2_w_m2, iue2_flux_deredden, iue2_m2_A['sigma'], index2, \
-             iue3_w_m2, iue3_flux_deredden, iue3_m2_A['sigma'], index3, \
+             schi05_w_2808, schi05_flux_deredden, index_S, \
              './'+nameGC)
