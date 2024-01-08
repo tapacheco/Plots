@@ -9,6 +9,7 @@ import plot_density_color_color as den
 import plot_spectra as spc
 import functions as apply
 import degrade_resolvingPower as rsp
+import plot_compareSSP as cpr
 
 import sys
 sys.path.append('../SSPmodels/codeModule/utilsSpecMod/')
@@ -17,12 +18,12 @@ from photoColors import compute_color_extinction
 from photoColors import calculate_colors
 
 path = '../SSPmodels/'
-#nameGC = 'NGC7089'
+nameGC = 'NGC7089'
 #color_excess_B_V = 0.06
 #file = 'subsets_hugs_ngc7089_meth1.txt'
-nameGC = 'NGC2808'
-color_excess_B_V = 0.22
-file = 'subsets_hugs_ngc2808_meth1.txt'
+#nameGC = 'NGC2808'
+#color_excess_B_V = 0.22
+#file = 'subsets_hugs_ngc2808_meth1.txt'
 
 synthetic_file_coelho = 'syntheticMAGS_Coelho.txt'
 synthetic_file_pacheco = 'syntheticMAGS_EHB_Herich.txt'
@@ -205,4 +206,31 @@ spc.plot_evolutionary_SSP(ms_spectrum['wavelength'],
                           bs_spectrum['flux'], 
                           bhb_spectrum['flux'], 
                           ehb_spectrum['flux'], './'+nameGC)
+
+
+base_ssp =rsp.degrade_resolving_power(path+nameGC+'_base_ssp.dat', 500)
+bs_ssp   = rsp.degrade_resolving_power(path+nameGC+'_bs_ssp.dat',  500)
+bhb_ssp  = rsp.degrade_resolving_power(path+nameGC+'_bhb_ssp.dat', 500)
+ehb_ssp  = rsp.degrade_resolving_power(path+nameGC+'_ehb_ssp.dat', 500)
+total_ssp=rsp.degrade_resolving_power(path+nameGC+'_total_ssp.dat',500)
+
 """
+
+base_ssp = pd.read_csv(path+nameGC+'_base_ssp.dat', engine='python', comment='#',
+                          skip_blank_lines=True, delim_whitespace=True,  header=1,
+                          names=['wavelength', 'flux'])
+bs_ssp = pd.read_csv(path+nameGC+'_bs_ssp.dat', engine='python', comment='#',
+                          skip_blank_lines=True, delim_whitespace=True,  header=1,
+                          names=['wavelength', 'flux'])
+bhb_ssp = pd.read_csv(path+nameGC+'_bhb_ssp.dat', engine='python', comment='#',
+                          skip_blank_lines=True, delim_whitespace=True,  header=1,
+                          names=['wavelength', 'flux'])
+ehb_ssp = pd.read_csv(path+nameGC+'_ehb_ssp.dat', engine='python', comment='#',
+                          skip_blank_lines=True, delim_whitespace=True,  header=1,
+                          names=['wavelength', 'flux'])
+total_ssp = pd.read_csv(path+nameGC+'_total_ssp.dat', engine='python', comment='#',
+                          skip_blank_lines=True, delim_whitespace=True,  header=1,
+                          names=['wavelength', 'flux'])
+
+cpr.plot_ssp_compare(base_ssp['wavelength'], base_ssp['flux'], bs_ssp['flux'], 
+                     bhb_ssp['flux'], ehb_ssp['flux'], total_ssp['flux'], './'+nameGC)
