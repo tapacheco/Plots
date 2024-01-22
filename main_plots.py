@@ -3,17 +3,18 @@ from math import *
 import pandas as pd
 import numpy as np
 from astropy.io import fits
-import extinction 
-from extinction import remove
+#import extinction 
+#from extinction import remove
 
-import plot_CMDs as cmd
-import plot_color_color as ccd
-import plot_density_color_color as den
-import plot_spectra as spc
-import functions as apply
-#import degrade_resolvingPower as rsp
+#import plot_CMDs as cmd
+#import plot_color_color as ccd
+#import plot_density_color_color as den
+#import plot_spectra as spc
+#import functions as apply
+import degrade_resolvingPower as rsp
 import plot_compareSSP as cpr
 import plot_SSP_observed as obs
+import plot_individual_absortion_line as abs
 
 import sys
 sys.path.append('../SSPmodels/codeModule/utilsSpecMod/')
@@ -22,13 +23,14 @@ from photoColors import compute_color_extinction
 from photoColors import calculate_colors
 
 path = '../SSPmodels/'
-nameGC = 'NGC7089'
-color_excess_B_V = 0.06
-file = 'subsets_hugs_ngc7089_meth1.txt'
-#nameGC = 'NGC2808'
-#color_excess_B_V = 0.22
-#file = 'subsets_hugs_ngc2808_meth1.txt'
+#nameGC = 'NGC7089'
+#color_excess_B_V = 0.06
+#file = 'subsets_hugs_ngc7089_meth1.txt'
+nameGC = 'NGC2808'
+color_excess_B_V = 0.22
+file = 'subsets_hugs_ngc2808_meth1.txt'
 
+"""
 synthetic_file_coelho = 'syntheticMAGS_Coelho.txt'
 synthetic_file_pacheco = 'syntheticMAGS_EHB_Herich.txt'
 synthetic_file_castelli = 'syntheticMAGS_Castelli.txt'
@@ -36,7 +38,11 @@ synthetic_file_castelli = 'syntheticMAGS_Castelli.txt'
 print("Globular Cluster: %s" %nameGC)
 
 photometry_gc = pd.read_csv(path+file, engine='python', comment='#',
-                            skip_blank_lines=True, delim_whitespace=True, 
+                            skip_blank_lines=True, sep='\s+', NGC2808_base_ssp.dat
+NGC2808_bs_ssp.dat
+NGC2808_ehb_ssp.dat
+NGC2808_bhb_ssp.dat
+NGC2808_total_ssp.dat
                             names=['X', 'Y', 
                             'F275W', 'RMSF275W', 'QFITF275W', 'RADXSF275W', 'NfF275W', 'NgF275W', #col 3
                             'F336W', 'RMSF336W', 'QFITF336W', 'RADXSF336W', 'NfF336W', 'NgF336W', #col 9
@@ -44,11 +50,11 @@ photometry_gc = pd.read_csv(path+file, engine='python', comment='#',
                             'F606W', 'RMSF606W', 'QFITF606W', 'RADXSF606W', 'NfF606W', 'NgF606W', #col 21
                             'F814W', 'RMSF814W', 'QFITF814W', 'RADXSF814W', 'NfF814W', 'NgF814W', #col 27
                             'P', 'RA', 'DEC', 'ID', 'ITER', 'MS','GB','RHB','BS','BHB','EHB']) #col 33
-synthetic_data_castelli = pd.read_csv(path+synthetic_file_castelli, engine='python', comment='#',
-                            skip_blank_lines=True, sep=',',
-                            names=['mod', 'TEFF', 'LOGG', 'FEH', 
-                                   'F275W', 'F336W', 'F438W', 'F606W', 'F814W', 
-                                   'Int_F275W', 'Int_F336W', 'Int_F438W', 'Int_F606W', 'Int_F814W'])
+#synthetic_data_castelli = pd.read_csv(path+synthetic_file_castelli, engine='python', comment='#',
+#                            skip_blank_lines=True, sep=',',
+#                            names=['mod', 'TEFF', 'LOGG', 'FEH', 
+#                                   'F275W', 'F336W', 'F438W', 'F606W', 'F814W', 
+#                                   'Int_F275W', 'Int_F336W', 'Int_F438W', 'Int_F606W', 'Int_F814W'])
 synthetic_data_coelho = pd.read_csv(path+synthetic_file_coelho, engine='python', comment='#',
                             skip_blank_lines=True, sep=',',
                             names=['mod', 'TEFF', 'LOGG', 'FEH', 
@@ -118,8 +124,8 @@ print("\n Calculating photometric colors from HST")
 color = calculate_colors(photometry_gc)
 coelho_color =  calculate_colors(synthetic_data_coelho)
 coelho_mag = apply.catch_magnitudes(synthetic_data_coelho)
-castelli_color =  calculate_colors(synthetic_data_castelli)
-castelli_mag = apply.catch_magnitudes(synthetic_data_castelli)
+#castelli_color =  calculate_colors(synthetic_data_castelli)
+#castelli_mag = apply.catch_magnitudes(synthetic_data_castelli)
 pacheco_color = calculate_colors(synthetic_data_pacheco)
 pacheco_mag = apply.catch_magnitudes(synthetic_data_pacheco)
 
@@ -149,7 +155,6 @@ bhb_color, bhb_mag = apply.color_magnitude(photometry_gc, 'BHB', cutoff,\
 ehb_color, ehb_mag = apply.color_magnitude(photometry_gc, 'EHB', cutoff,\
                                          color, reddening, extinction)
 
-"""
 print("Plotting CMD")
 cmd.plot_color_magnitude_diagram(ms_color, ms_mag, \
                                 gb_color, gb_mag, \
@@ -166,10 +171,9 @@ ccd.plot_color_color_diagram(ms_color, distance_ms, \
                              bs_color, distance_bs, \
                              bhb_color,distance_bhb,\
                              ehb_color,distance_ehb,\
-                             coelho_color,  \
+                             coelho_color,  \g
                              pacheco_color, \
-                             './', nameGC)
-"""
+
 print("Plotting other color-color diagram")
 den.plot_density_diagram(ms_color, distance_ms, \
                          gb_color, distance_gb, \
@@ -181,7 +185,7 @@ den.plot_density_diagram(ms_color, distance_ms, \
                          pacheco_color, \
                          './', nameGC)
 
-"""
+
 #ms_spectrum =  rsp.degrade_resolving_power(path+nameGC+'_ms_spectrum.dat', 1000)
 #gb_spectrum =  rsp.degrade_resolving_power(path+nameGC+'_gb_spectrum.dat', 1000)
 #rhb_spectrum = rsp.degrade_resolving_power(path+nameGC+'_rhb_spectrum.dat',1000)
@@ -190,22 +194,22 @@ den.plot_density_diagram(ms_color, distance_ms, \
 #ehb_spectrum = rsp.degrade_resolving_power(path+nameGC+'_ehb_spectrum.dat',1000)
 
 ms_spectrum = pd.read_csv(path+nameGC+'_ms_spectrum.dat', engine='python', comment='#',
-                          skip_blank_lines=True, delim_whitespace=True,  header=1,
+                          skip_blank_lines=True, sep='\s+',  header=1,
                           names=['wavelength', 'flux'])
 gb_spectrum = pd.read_csv(path+nameGC+'_gb_spectrum.dat', engine='python', comment='#',
-                          skip_blank_lines=True, delim_whitespace=True,  header=1,
+                          skip_blank_lines=True, sep='\s+',  header=1,
                           names=['wavelength', 'flux'])
 rhb_spectrum = pd.read_csv(path+nameGC+'_rhb_spectrum.dat', engine='python', comment='#',
-                          skip_blank_lines=True, delim_whitespace=True,  header=1,
+                          skip_blank_lines=True, sep='\s+',  header=1,
                           names=['wavelength', 'flux'])
 bs_spectrum = pd.read_csv(path+nameGC+'_bs_spectrum.dat', engine='python', comment='#',
-                          skip_blank_lines=True, delim_whitespace=True,  header=1,
+                          skip_blank_lines=True, sep='\s+',  header=1,
                           names=['wavelength', 'flux'])
 bhb_spectrum = pd.read_csv(path+nameGC+'_bhb_spectrum.dat', engine='python', comment='#',
-                          skip_blank_lines=True, delim_whitespace=True,  header=1,
+                          skip_blank_lines=True, sep='\s+',  header=1,
                           names=['wavelength', 'flux'])
 ehb_spectrum = pd.read_csv(path+nameGC+'_ehb_spectrum.dat', engine='python', comment='#',
-                          skip_blank_lines=True, delim_whitespace=True,  header=1,
+                          skip_blank_lines=True, sep='\s+',  header=1,
                           names=['wavelength', 'flux'])
 
 spc.plot_evolutionary_SSP(ms_spectrum['wavelength'], 
@@ -226,19 +230,19 @@ spc.plot_evolutionary_SSP(ms_spectrum['wavelength'],
 #                     bhb_ssp['flux'], ehb_ssp['flux'], total_ssp['flux'], './'+nameGC)
 
 base_ssp = pd.read_csv(path+nameGC+'_base_ssp.dat', engine='python', comment='#',
-                          skip_blank_lines=True, delim_whitespace=True,  header=1,
+                          skip_blank_lines=True, sep='\s+',  header=1,
                           names=['wavelength', 'flux'])
 bs_ssp = pd.read_csv(path+nameGC+'_bs_ssp.dat', engine='python', comment='#',
-                          skip_blank_lines=True, delim_whitespace=True,  header=1,
+                          skip_blank_lines=True, sep='\s+',  header=1,
                           names=['wavelength', 'flux'])
 bhb_ssp = pd.read_csv(path+nameGC+'_bhb_ssp.dat', engine='python', comment='#',
-                          skip_blank_lines=True, delim_whitespace=True,  header=1,
+                          skip_blank_lines=True, sep='\s+',  header=1,
                           names=['wavelength', 'flux'])
 ehb_ssp = pd.read_csv(path+nameGC+'_ehb_ssp.dat', engine='python', comment='#',
-                          skip_blank_lines=True, delim_whitespace=True,  header=1,
+                          skip_blank_lines=True, sep='\s+',  header=1,
                           names=['wavelength', 'flux'])
 total_ssp = pd.read_csv(path+nameGC+'_total_ssp.dat', engine='python', comment='#',
-                          skip_blank_lines=True, delim_whitespace=True,  header=1,
+                          skip_blank_lines=True, sep='\s+',  header=1,
                           names=['wavelength', 'flux'])
 #cpr.plot_ssp_compare(base_ssp['wavelength'], base_ssp['flux'], bs_ssp['flux'], 
 #                     bhb_ssp['flux'], ehb_ssp['flux'], total_ssp['flux'], './'+nameGC)
@@ -247,19 +251,19 @@ Av = 3.1*color_excess_B_V
 print('Av = %f'%Av)
 import extinction 
 iue1_m2_A = pd.read_csv('/Users/tpacheco/Documents/doutorado/ARI_LJMU/ngc7089_IUE_lr12220',
-                        skip_blank_lines=True,header=18,engine='python',delim_whitespace=True, 
+                        skip_blank_lines=True,header=18,engine='python',sep='\s+', 
                         names=['wavelength','flux','sigma','back','net','quali'])
 iue1_f_m2 = np.array(iue1_m2_A['flux'])
 iue1_w_m2 = np.array(iue1_m2_A['wavelength'])
 iue1_flux_deredden = remove(extinction.fm07(iue1_w_m2, Av), iue1_f_m2)
 iue2_m2_A = pd.read_csv('/Users/tpacheco/Documents/doutorado/ARI_LJMU/ngc7089_IUE_sp10171',
-                        skip_blank_lines=True,header=18,engine='python',delim_whitespace=True, 
+                        skip_blank_lines=True,header=18,engine='python',sep='\s+', 
                         names=['wavelength','flux','sigma','back','net','quali'])
 iue2_f_m2 = np.array(iue2_m2_A['flux'])
 iue2_w_m2 = np.array(iue2_m2_A['wavelength'])
 iue2_flux_deredden = remove(extinction.fm07(iue2_w_m2, Av), iue2_f_m2)
 iue3_m2_A = pd.read_csv('/Users/tpacheco/Documents/doutorado/ARI_LJMU/ngc7089_IUE_sp15885',
-                        skip_blank_lines=True,header=18,engine='python',delim_whitespace=True, 
+                        skip_blank_lines=True,header=18,engine='python',sep='\s+', 
                         names=['wavelength','flux','sigma','back','net','quali'])
 iue3_f_m2 = np.array(iue3_m2_A['flux'])
 iue3_w_m2 = np.array(iue3_m2_A['wavelength'])
@@ -302,3 +306,32 @@ obs.plot_ssp(total_ssp['wavelength'], total_ssp['flux'], index_ssp,\
 #             './'+nameGC)
 #
 """
+
+base_ssp = pd.read_csv(path+nameGC+'_base_ssp.dat', engine='python', comment='#',
+                          skip_blank_lines=True, sep='\s+',  header=1,
+                          names=['wavelength', 'flux'])
+bs_ssp   = pd.read_csv(path+nameGC+'_bs_ssp.dat',   engine='python', comment='#',
+                          skip_blank_lines=True, sep='\s+',  header=1,
+                          names=['wavelength', 'flux'])
+bhb_ssp  = pd.read_csv(path+nameGC+'_bhb_ssp.dat',  engine='python', comment='#',
+                          skip_blank_lines=True, sep='\s+',  header=1,
+                          names=['wavelength', 'flux'])
+ehb_ssp  = pd.read_csv(path+nameGC+'_ehb_ssp.dat',  engine='python', comment='#',
+                          skip_blank_lines=True, sep='\s+',  header=1,
+                          names=['wavelength', 'flux'])
+total_ssp= pd.read_csv(path+nameGC+'_total_ssp.dat',engine='python', comment='#',
+                          skip_blank_lines=True, sep='\s+',  header=1,
+                          names=['wavelength', 'flux'])
+
+Ha = 6562.5
+Hb = 4860.74
+Hc = 4340.1 
+Hd = 4101.2
+Ca = 3951.
+
+abs.plot_ssp_lines(base_ssp,
+                   bs_ssp,  
+                   bhb_ssp, 
+                   ehb_ssp, 
+                   total_ssp,
+                   'NGC2808_Ha', Ha)
