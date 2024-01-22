@@ -20,7 +20,7 @@ def plot_color_color_diagram(ms_color, distance_ms, \
                              bs_color, distance_bs, \
                              bhb_color,distance_bhb,\
                              ehb_color,distance_ehb,\
-                             coelho_color, \
+                             library_color, \
                              pacheco_color, \
                              path, name):
     xmin, xmax, ymin, ymax = (-4.2, 10.2, -2.2, 3.2)
@@ -34,7 +34,7 @@ def plot_color_color_diagram(ms_color, distance_ms, \
     axs[0,0].scatter( bs_color['F275W_F438W'], bs_color['F275W_F336W'], marker='s', s=40, alpha=0.15,  c='#0077BB',label='bs')
     axs[0,0].scatter(bhb_color['F275W_F438W'],bhb_color['F275W_F336W'], marker='o', s=40, alpha=0.15,  c='#33BBEE',label='HB')
     axs[0,0].scatter(ehb_color['F275W_F438W'],ehb_color['F275W_F336W'], marker='*', s=40, alpha=0.15,  c='#EE3377',label='EHB')
-    axs[0,0].scatter( coelho_color['F275W_F438W'], coelho_color['F275W_F336W'], marker='X', s=40,  
+    axs[0,0].scatter( library_color['F275W_F438W'], library_color['F275W_F336W'], marker='X', s=40,  
                      facecolors='#BBBBBB', edgecolors='#000000', alpha=0.15)
     axs[0,0].scatter(pacheco_color['F275W_F438W'],pacheco_color['F275W_F336W'], marker='D', s=40,  
                      facecolors='#000000', edgecolors='#BBBBBB', alpha=0.15)
@@ -56,7 +56,7 @@ def plot_color_color_diagram(ms_color, distance_ms, \
     axs[0,1].scatter( bs_color['F275W_F814W'], bs_color['F438W_F814W'], marker='s', s=40, alpha=0.15,  c='#0077BB',label='bs')
     axs[0,1].scatter(bhb_color['F275W_F814W'],bhb_color['F438W_F814W'], marker='o', s=40, alpha=0.15,  c='#33BBEE',label='HB')
     axs[0,1].scatter(ehb_color['F275W_F814W'],ehb_color['F438W_F814W'], marker='*', s=40, alpha=0.15,  c='#EE3377',label='EHB')
-    axs[0,1].scatter( coelho_color['F275W_F814W'], coelho_color['F438W_F814W'], marker='X', s=40,  
+    axs[0,1].scatter( library_color['F275W_F814W'], library_color['F438W_F814W'], marker='X', s=40,  
                      facecolors='#BBBBBB', edgecolors='#000000', alpha=0.15)
     axs[0,1].scatter(pacheco_color['F275W_F814W'],pacheco_color['F438W_F814W'],  marker='D', s=40,  
                      facecolors='#000000', edgecolors='#BBBBBB', alpha=0.15)
@@ -78,7 +78,7 @@ def plot_color_color_diagram(ms_color, distance_ms, \
     axs[1,0].scatter( bs_color['F336W_F606W'], bs_color['F606W_F814W'], marker='s', s=40, alpha=0.15,  c='#0077BB',label='bs')
     axs[1,0].scatter(bhb_color['F336W_F606W'],bhb_color['F606W_F814W'], marker='o', s=40, alpha=0.15,  c='#33BBEE',label='HB')
     axs[1,0].scatter(ehb_color['F336W_F606W'],ehb_color['F606W_F814W'], marker='*', s=40, alpha=0.15,  c='#EE3377',label='EHB')
-    axs[1,0].scatter( coelho_color['F336W_F606W'], coelho_color['F606W_F814W'], marker='X', s=40,  
+    axs[1,0].scatter( library_color['F336W_F606W'], library_color['F606W_F814W'], marker='X', s=40,  
                      facecolors='#BBBBBB', edgecolors='#000000', alpha=0.15)
     axs[1,0].scatter(pacheco_color['F336W_F606W'],pacheco_color['F606W_F814W'], marker='D', s=40,  
                      facecolors='#000000', edgecolors='#BBBBBB', alpha=0.15)
@@ -100,7 +100,7 @@ def plot_color_color_diagram(ms_color, distance_ms, \
     axs[1,1].scatter( bs_color['F275W_F606W'], bs_color['F438W_F606W'], marker='s', s=40, alpha=0.15,  c='#0077BB',label='bs')
     axs[1,1].scatter(bhb_color['F275W_F606W'],bhb_color['F438W_F606W'], marker='o', s=40, alpha=0.15,  c='#33BBEE',label='HB')
     axs[1,1].scatter(ehb_color['F275W_F606W'],ehb_color['F438W_F606W'], marker='*', s=40, alpha=0.15,  c='#EE3377',label='EHB')
-    axs[1,1].scatter( coelho_color['F275W_F606W'], coelho_color['F438W_F606W'], marker='X', s=40,  
+    axs[1,1].scatter( library_color['F275W_F606W'], library_color['F438W_F606W'], marker='X', s=40,  
                      facecolors='#BBBBBB', edgecolors='#000000', alpha=0.15)
     axs[1,1].scatter(pacheco_color['F275W_F606W'],pacheco_color['F438W_F606W'],  marker='D', s=40,  
                      facecolors='#000000', edgecolors='#BBBBBB', alpha=0.15)
@@ -122,7 +122,7 @@ def plot_color_color_diagram(ms_color, distance_ms, \
     axs[2,0].scatter( bs_color['F336W_F814W'], bs_color['F336W_F438W'], marker='s', s=40, alpha=0.15,  c='#0077BB',label='bs')
     axs[2,0].scatter(bhb_color['F336W_F814W'],bhb_color['F336W_F438W'], marker='o', s=40, alpha=0.15,  c='#33BBEE',label='HB')
     axs[2,0].scatter(ehb_color['F336W_F814W'],ehb_color['F336W_F438W'], marker='*', s=40, alpha=0.15,  c='#EE3377',label='EHB')
-    axs[2,0].scatter( coelho_color['F336W_F814W'], coelho_color['F336W_F438W'], marker='X', s=40,  
+    axs[2,0].scatter( library_color['F336W_F814W'], library_color['F336W_F438W'], marker='X', s=40,  
                      facecolors='#BBBBBB', edgecolors='#000000', alpha=0.15)
     axs[2,0].scatter(pacheco_color['F336W_F814W'],pacheco_color['F336W_F438W'], marker='D', s=40,  
                      facecolors='#000000', edgecolors='#BBBBBB', alpha=0.15)

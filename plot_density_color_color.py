@@ -16,7 +16,7 @@ def plot_density_diagram(ms_color, distance_ms, \
                          bs_color, distance_bs, \
                          bhb_color,distance_bhb,\
                          ehb_color,distance_ehb,\
-                         coelho_color, \
+                         library_color, \
                          pacheco_color, \
                          path, name):
     xmin, xmax, ymin, ymax = (-4.2, 10.2, -2.2, 3.2)
@@ -29,7 +29,7 @@ def plot_density_diagram(ms_color, distance_ms, \
     sns.kdeplot(data=rhb_color, x='F275W_F438W',y='F275W_F336W', color='#CC3311',fill=True,ax=axs[0,0])
     sns.kdeplot(data=bhb_color, x='F275W_F438W',y='F275W_F336W', color='#EE3377',fill=True,ax=axs[0,0])
     sns.kdeplot(data=ehb_color, x='F275W_F438W',y='F275W_F336W', color='#33BBEE',fill=True,ax=axs[0,0])
-    axs[0,0].scatter( coelho_color['F275W_F438W'], coelho_color['F275W_F336W'], marker='X', s=40, 
+    axs[0,0].scatter( library_color['F275W_F438W'], library_color['F275W_F336W'], marker='X', s=40, 
                      facecolors='#BBBBBB', edgecolors='#000000', alpha=0.7)
     axs[0,0].scatter(pacheco_color['F275W_F438W'],pacheco_color['F275W_F336W'], marker='D', s=40, 
                      facecolors='#000000', edgecolors='#BBBBBB', alpha=0.7)
@@ -51,7 +51,7 @@ def plot_density_diagram(ms_color, distance_ms, \
     sns.kdeplot(data=rhb_color, x='F275W_F814W', y='F438W_F814W', color='#CC3311',fill=True,ax=axs[0,1])
     sns.kdeplot(data=bhb_color, x='F275W_F814W', y='F438W_F814W', color='#EE3377',fill=True,ax=axs[0,1])
     sns.kdeplot(data=ehb_color, x='F275W_F814W', y='F438W_F814W', color='#33BBEE',fill=True,ax=axs[0,1])
-    axs[0,1].scatter( coelho_color['F275W_F814W'], coelho_color['F438W_F814W'], marker='X', s=40, 
+    axs[0,1].scatter( library_color['F275W_F814W'], library_color['F438W_F814W'], marker='X', s=40, 
                      facecolors='#BBBBBB', edgecolors='#000000', alpha=0.7)
     axs[0,1].scatter(pacheco_color['F275W_F814W'],pacheco_color['F438W_F814W'],  marker='D', s=40, 
                      facecolors='#000000', edgecolors='#BBBBBB', alpha=0.7)    
@@ -73,7 +73,7 @@ def plot_density_diagram(ms_color, distance_ms, \
     sns.kdeplot(data=rhb_color, x='F336W_F606W',y='F606W_F814W',color='#CC3311',fill=True,ax=axs[1,0])
     sns.kdeplot(data=bhb_color, x='F336W_F606W',y='F606W_F814W',color='#EE3377',fill=True,ax=axs[1,0])
     sns.kdeplot(data=ehb_color, x='F336W_F606W',y='F606W_F814W',color='#33BBEE',fill=True,ax=axs[1,0])
-    axs[1,0].scatter( coelho_color['F336W_F606W'], coelho_color['F606W_F814W'], marker='X', s=40, 
+    axs[1,0].scatter( library_color['F336W_F606W'], library_color['F606W_F814W'], marker='X', s=40, 
                      facecolors='#BBBBBB', edgecolors='#000000', alpha=0.7)
     axs[1,0].scatter(pacheco_color['F336W_F606W'],pacheco_color['F606W_F814W'], marker='D', s=40, 
                      facecolors='#000000', edgecolors='#BBBBBB', alpha=0.7)
@@ -96,7 +96,7 @@ def plot_density_diagram(ms_color, distance_ms, \
     sns.kdeplot(data=rhb_color, x='F275W_F606W',y='F438W_F606W',color='#CC3311',fill=True,ax=axs[1,1])
     sns.kdeplot(data=bhb_color, x='F275W_F606W',y='F438W_F606W',color='#EE3377',fill=True,ax=axs[1,1])
     sns.kdeplot(data=ehb_color, x='F275W_F606W',y='F438W_F606W',color='#33BBEE',fill=True,ax=axs[1,1])
-    axs[1,1].scatter( coelho_color['F275W_F606W'], coelho_color['F438W_F606W'], marker='X', s=40, 
+    axs[1,1].scatter( library_color['F275W_F606W'], library_color['F438W_F606W'], marker='X', s=40, 
                      facecolors='#BBBBBB', edgecolors='#000000', alpha=0.7)
     axs[1,1].scatter(pacheco_color['F275W_F606W'],pacheco_color['F438W_F606W'],  marker='D', s=40, 
                      facecolors='#000000', edgecolors='#BBBBBB', alpha=0.7)
@@ -119,7 +119,7 @@ def plot_density_diagram(ms_color, distance_ms, \
     sns.kdeplot(data=rhb_color, x='F336W_F814W',y='F336W_F438W', color='#CC3311',fill=True,ax=axs[2,0])
     sns.kdeplot(data=bhb_color, x='F336W_F814W',y='F336W_F438W', color='#EE3377',fill=True,ax=axs[2,0])
     sns.kdeplot(data=ehb_color, x='F336W_F814W',y='F336W_F438W', color='#33BBEE',fill=True,ax=axs[2,0])
-    axs[2,0].scatter( coelho_color['F336W_F814W'], coelho_color['F336W_F438W'], marker='X', s=40, 
+    axs[2,0].scatter( library_color['F336W_F814W'], library_color['F336W_F438W'], marker='X', s=40, 
                      facecolors='#BBBBBB', edgecolors='#000000', alpha=0.7)
     axs[2,0].scatter(pacheco_color['F336W_F814W'],pacheco_color['F336W_F438W'], marker='D', s=40, 
                      facecolors='#000000', edgecolors='#BBBBBB', alpha=0.7)

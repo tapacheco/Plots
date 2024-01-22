@@ -11,7 +11,7 @@ import plot_color_color as ccd
 import plot_density_color_color as den
 import plot_spectra as spc
 import functions as apply
-import degrade_resolvingPower as rsp
+#import degrade_resolvingPower as rsp
 import plot_compareSSP as cpr
 import plot_SSP_observed as obs
 
@@ -44,6 +44,11 @@ photometry_gc = pd.read_csv(path+file, engine='python', comment='#',
                             'F606W', 'RMSF606W', 'QFITF606W', 'RADXSF606W', 'NfF606W', 'NgF606W', #col 21
                             'F814W', 'RMSF814W', 'QFITF814W', 'RADXSF814W', 'NfF814W', 'NgF814W', #col 27
                             'P', 'RA', 'DEC', 'ID', 'ITER', 'MS','GB','RHB','BS','BHB','EHB']) #col 33
+synthetic_data_castelli = pd.read_csv(path+synthetic_file_castelli, engine='python', comment='#',
+                            skip_blank_lines=True, sep=',',
+                            names=['mod', 'TEFF', 'LOGG', 'FEH', 
+                                   'F275W', 'F336W', 'F438W', 'F606W', 'F814W', 
+                                   'Int_F275W', 'Int_F336W', 'Int_F438W', 'Int_F606W', 'Int_F814W'])
 synthetic_data_coelho = pd.read_csv(path+synthetic_file_coelho, engine='python', comment='#',
                             skip_blank_lines=True, sep=',',
                             names=['mod', 'TEFF', 'LOGG', 'FEH', 
@@ -113,6 +118,8 @@ print("\n Calculating photometric colors from HST")
 color = calculate_colors(photometry_gc)
 coelho_color =  calculate_colors(synthetic_data_coelho)
 coelho_mag = apply.catch_magnitudes(synthetic_data_coelho)
+castelli_color =  calculate_colors(synthetic_data_castelli)
+castelli_mag = apply.catch_magnitudes(synthetic_data_castelli)
 pacheco_color = calculate_colors(synthetic_data_pacheco)
 pacheco_mag = apply.catch_magnitudes(synthetic_data_pacheco)
 
@@ -170,7 +177,7 @@ den.plot_density_diagram(ms_color, distance_ms, \
                          bs_color, distance_bs, \
                          bhb_color,distance_bhb,\
                          ehb_color,distance_ehb,\
-                         coelho_color,  \
+                         castelli_color,  \
                          pacheco_color, \
                          './', nameGC)
 
