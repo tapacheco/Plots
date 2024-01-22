@@ -22,7 +22,7 @@ filter_files = pd.Series(['./HST_WFC3_UVIS1.F275W.dat',
                           './HST_ACS_WFC.F606W.dat', 
                           './HST_ACS_WFC.F814W.dat'])
 
-fig, axt = plt.subplots(sharex=True, figsize=(15,6.5), tight_layout=True)
+fig, axt = plt.subplots(sharex=True, figsize=(10,4.5), tight_layout=True)
 plt.minorticks_on()
 
 # 400# 450# 510# 600# 730
@@ -42,20 +42,20 @@ for k in range(NUFL):
                  color=next(palette))
     axt.fill_between(filter['wavelength'], filter['flux'], color=next(palette), alpha=0.25)
 
-axt.text(2300, 0.14, 'F275W', color='#882E72', weight='bold', fontsize=30)
-axt.text(3100, 0.215, 'F336W', color='#0077BB', weight='bold', fontsize=30)
-axt.text(4000, 0.26, 'F438W', color='#EE7733', weight='bold', fontsize=30)
-axt.text(5500, 0.445, 'F606W', color='#009988', weight='bold', fontsize=30)
-axt.text(8200, 0.36, 'F814W', color='#EE3377', weight='bold', fontsize=30)
+axt.text(2300, 0.14, 'F275W', color='#882E72', weight='bold', fontsize=20)
+axt.text(3100, 0.215, 'F336W', color='#0077BB', weight='bold', fontsize=20)
+axt.text(4000, 0.26, 'F438W', color='#EE7733', weight='bold', fontsize=20)
+axt.text(5500, 0.445, 'F606W', color='#009988', weight='bold', fontsize=20)
+axt.text(8200, 0.36, 'F814W', color='#EE3377', weight='bold', fontsize=20)
 
 xmin, xmax, ymin, ymax = (2100, 9900, 0, 0.51)
 axt.set_xlim(xmin, xmax)
 axt.set_ylim(ymin, ymax)
-plt.title("", fontsize=30)
-plt.ylabel(r'Transmission curve', fontsize=30)
-plt.xlabel(r'Wavelength [\AA]', fontsize=30)
-plt.xticks(fontsize=28)
-plt.yticks(fontsize=28)
+plt.title("", fontsize=20)
+plt.ylabel(r'Transmission', fontsize=20)
+plt.xlabel(r'Wavelength [\AA]', fontsize=20)
+plt.xticks(fontsize=20)
+plt.yticks(fontsize=20)
 plt.tick_params(direction='in', which='major', length=8, width=1.5, top=True, right=True)
 plt.tick_params(direction='in', which='minor', length=5, width=1.2, top=True, right=True)
 plt.rcParams['ytick.right'] = True 

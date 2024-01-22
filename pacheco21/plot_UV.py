@@ -83,7 +83,7 @@ def fig_UV(data10B, data15B, data20B, data25B, data30B, data35B, data45B, data65
     #ax6.set_ylim(0,1.7e7)
 
     ax1.set_xlim(1000.,2000.)
-    ax6.set_xlabel(r'Wavelength [\texttt{\AA}]', fontsize=26)
+    ax6.set_xlabel(r'Wavelength [$\AA$]', fontsize=26)
     ax6.set_xticks([1100,1300,1500,1700,1900])
 
     plt.subplots_adjust(left=0.08, bottom=0.06, right=0.96, top=0.96, wspace=0.0, hspace=0.18)

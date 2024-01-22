@@ -34,7 +34,7 @@ synthetic_file_pacheco = 'syntheticMAGS_EHB_Herich.txt'
 synthetic_file_castelli = 'syntheticMAGS_Castelli.txt'
 
 print("Globular Cluster: %s" %nameGC)
-"""
+
 photometry_gc = pd.read_csv(path+file, engine='python', comment='#',
                             skip_blank_lines=True, delim_whitespace=True, 
                             names=['X', 'Y', 
@@ -60,55 +60,55 @@ param_ms = pd.read_csv(path+nameGC+'_ms_param.dat', engine='python', comment='#'
                                        'F336W_F438W', 'F336W_F606W', 'F336W_F814W', 'F438W_F606W', 
                                        'F438W_F814W', 'F606W_F814W', 'distance', 'index', 
                                        'TEFF', 'LOG_G'])
-distance_ms = param_ms['distance'][1:]
+distance_ms = param_ms['distance'][1:].astype(float)
 param_gb = pd.read_csv(path+nameGC+'_gb_param.dat', engine='python', comment='#', skip_blank_lines=True, 
                        sep='\t', names=['F275W', 'F336W', 'F438W', 'F606W', 'F814W',
                                        'F275W_F336W', 'F275W_F438W', 'F275W_F606W', 'F275W_F814W', 
                                        'F336W_F438W', 'F336W_F606W', 'F336W_F814W', 'F438W_F606W', 
                                        'F438W_F814W', 'F606W_F814W', 'distance', 'index', 
                                        'TEFF', 'LOG_G'])
-distance_gb = param_ms['distance'][1:]
+distance_gb = param_gb['distance'][1:].astype(float)
 param_rhb = pd.read_csv(path+nameGC+'_rhb_param.dat', engine='python', comment='#', skip_blank_lines=True, 
                        sep='\t', names=['F275W', 'F336W', 'F438W', 'F606W', 'F814W',
                                        'F275W_F336W', 'F275W_F438W', 'F275W_F606W', 'F275W_F814W', 
                                        'F336W_F438W', 'F336W_F606W', 'F336W_F814W', 'F438W_F606W', 
                                        'F438W_F814W', 'F606W_F814W', 'distance', 'index', 
                                        'TEFF', 'LOG_G'])
-distance_rhb = param_ms['distance'][1:]
+distance_rhb = param_rhb['distance'][1:].astype(float)
 param_bs = pd.read_csv(path+nameGC+'_bs_param.dat', engine='python', comment='#', skip_blank_lines=True, 
                        sep='\t', names=['F275W', 'F336W', 'F438W', 'F606W', 'F814W',
                                        'F275W_F336W', 'F275W_F438W', 'F275W_F606W', 'F275W_F814W', 
                                        'F336W_F438W', 'F336W_F606W', 'F336W_F814W', 'F438W_F606W', 
                                        'F438W_F814W', 'F606W_F814W', 'distance', 'index', 
                                        'TEFF', 'LOG_G'])
-distance_bs = param_ms['distance'][1:]
+distance_bs = param_bs['distance'][1:].astype(float)
 param_bhb = pd.read_csv(path+nameGC+'_bhb_param.dat', engine='python', comment='#', skip_blank_lines=True, 
                        sep='\t', names=['F275W', 'F336W', 'F438W', 'F606W', 'F814W',
                                        'F275W_F336W', 'F275W_F438W', 'F275W_F606W', 'F275W_F814W', 
                                        'F336W_F438W', 'F336W_F606W', 'F336W_F814W', 'F438W_F606W', 
                                        'F438W_F814W', 'F606W_F814W', 'distance', 'index', 
                                        'TEFF', 'LOG_G'])
-distance_bhb = param_ms['distance'][1:]
+distance_bhb = param_bhb['distance'][1:].astype(float)
 param_ehb = pd.read_csv(path+nameGC+'_ehb_param.dat', engine='python', comment='#', skip_blank_lines=True, 
                        sep='\t', header=1, names=['F275W', 'F336W', 'F438W', 'F606W', 'F814W',
                                        'F275W_F336W', 'F275W_F438W', 'F275W_F606W', 'F275W_F814W', 
                                        'F336W_F438W', 'F336W_F606W', 'F336W_F814W', 'F438W_F606W', 
                                        'F438W_F814W', 'F606W_F814W', 'distance', 'index', 
                                        'TEFF', 'LOG_G'])
-distance_ehb = param_ms['distance'][1:]
+distance_ehb = param_ehb['distance'][1:].astype(float)
 
-distances = pd.DataFrame({'ms': distance_ms,
-                          'gb': distance_gb, 
-                          'rhb':distance_rhb, 
-                          'bs': distance_bs, 
-                          'bhb':distance_bhb, 
-                          'ehb':distance_ehb})
-"""
+distance_ms  = pd.DataFrame({'ms': distance_ms})
+distance_gb  = pd.DataFrame({'gb': distance_gb}) 
+distance_rhb = pd.DataFrame({'rhb':distance_rhb})
+distance_bs  = pd.DataFrame({'bs': distance_bs}) 
+distance_bhb = pd.DataFrame({'bhb':distance_bhb})
+distance_ehb = pd.DataFrame({'ehb':distance_ehb})
+
 print("Computing color excess")
 print("E(B-V): %s" %color_excess_B_V)
 reddening = get_reddening(color_excess_B_V)
 extinction = compute_color_extinction(color_excess_B_V)
-"""
+
 print("\n Calculating photometric colors from HST")
 color = calculate_colors(photometry_gc)
 coelho_color =  calculate_colors(synthetic_data_coelho)
@@ -142,7 +142,7 @@ bhb_color, bhb_mag = apply.color_magnitude(photometry_gc, 'BHB', cutoff,\
 ehb_color, ehb_mag = apply.color_magnitude(photometry_gc, 'EHB', cutoff,\
                                          color, reddening, extinction)
 
-
+"""
 print("Plotting CMD")
 cmd.plot_color_magnitude_diagram(ms_color, ms_mag, \
                                 gb_color, gb_mag, \
@@ -153,29 +153,28 @@ cmd.plot_color_magnitude_diagram(ms_color, ms_mag, \
                                  './', nameGC)
 
 print("Plotting color-color diagram")
-ccd.plot_color_color_diagram(ms_color, \
-                             gb_color, \
-                             rhb_color,\
-                             bs_color, \
-                             bhb_color,\
-                             ehb_color,\
+ccd.plot_color_color_diagram(ms_color, distance_ms, \
+                             gb_color, distance_gb, \
+                             rhb_color,distance_rhb,\
+                             bs_color, distance_bs, \
+                             bhb_color,distance_bhb,\
+                             ehb_color,distance_ehb,\
                              coelho_color,  \
                              pacheco_color, \
-                             distances, \
                              './', nameGC)
-
+"""
 print("Plotting other color-color diagram")
-den.plot_density_diagram(ms_color, \
-                             gb_color, \
-                             rhb_color,\
-                             bs_color, \
-                             bhb_color,\
-                             ehb_color,\
-                             coelho_color,  \
-                             pacheco_color, \
-                             './', nameGC)
+den.plot_density_diagram(ms_color, distance_ms, \
+                         gb_color, distance_gb, \
+                         rhb_color,distance_rhb,\
+                         bs_color, distance_bs, \
+                         bhb_color,distance_bhb,\
+                         ehb_color,distance_ehb,\
+                         coelho_color,  \
+                         pacheco_color, \
+                         './', nameGC)
 
-
+"""
 #ms_spectrum =  rsp.degrade_resolving_power(path+nameGC+'_ms_spectrum.dat', 1000)
 #gb_spectrum =  rsp.degrade_resolving_power(path+nameGC+'_gb_spectrum.dat', 1000)
 #rhb_spectrum = rsp.degrade_resolving_power(path+nameGC+'_rhb_spectrum.dat',1000)
@@ -209,7 +208,7 @@ spc.plot_evolutionary_SSP(ms_spectrum['wavelength'],
                           bs_spectrum['flux'], 
                           bhb_spectrum['flux'], 
                           ehb_spectrum['flux'], './'+nameGC)
-"""
+
 #base_ssp =rsp.degrade_resolving_power(path+nameGC+'_base_ssp.dat', 1000)
 #bs_ssp   = rsp.degrade_resolving_power(path+nameGC+'_bs_ssp.dat',  1000)
 #bhb_ssp  = rsp.degrade_resolving_power(path+nameGC+'_bhb_ssp.dat', 1000)
@@ -295,3 +294,4 @@ obs.plot_ssp(total_ssp['wavelength'], total_ssp['flux'], index_ssp,\
 #             schi05_w_2808, schi05_flux_deredden, index_S, \
 #             './'+nameGC)
 #
+"""
