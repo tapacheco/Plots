@@ -307,21 +307,32 @@ obs.plot_ssp(total_ssp['wavelength'], total_ssp['flux'], index_ssp,\
 #
 """
 
-base_ssp = pd.read_csv(path+nameGC+'_base_ssp.dat', engine='python', comment='#',
-                          skip_blank_lines=True, sep='\s+',  header=1,
-                          names=['wavelength', 'flux'])
-bs_ssp   = pd.read_csv(path+nameGC+'_bs_ssp.dat',   engine='python', comment='#',
-                          skip_blank_lines=True, sep='\s+',  header=1,
-                          names=['wavelength', 'flux'])
-bhb_ssp  = pd.read_csv(path+nameGC+'_bhb_ssp.dat',  engine='python', comment='#',
-                          skip_blank_lines=True, sep='\s+',  header=1,
-                          names=['wavelength', 'flux'])
-ehb_ssp  = pd.read_csv(path+nameGC+'_ehb_ssp.dat',  engine='python', comment='#',
-                          skip_blank_lines=True, sep='\s+',  header=1,
-                          names=['wavelength', 'flux'])
-total_ssp= pd.read_csv(path+nameGC+'_total_ssp.dat',engine='python', comment='#',
-                          skip_blank_lines=True, sep='\s+',  header=1,
-                          names=['wavelength', 'flux'])
+#base_ssp = pd.read_csv(path+nameGC+'_base_ssp.dat', engine='python', comment='#',
+#                          skip_blank_lines=True, sep='\s+',  header=1,
+#                          names=['wavelength', 'flux'])
+#bs_ssp   = pd.read_csv(path+nameGC+'_bs_ssp.dat',   engine='python', comment='#',
+#                          skip_blank_lines=True, sep='\s+',  header=1,
+#                          names=['wavelength', 'flux'])
+#bhb_ssp  = pd.read_csv(path+nameGC+'_bhb_ssp.dat',  engine='python', comment='#',
+#                          skip_blank_lines=True, sep='\s+',  header=1,
+#                          names=['wavelength', 'flux'])
+#ehb_ssp  = pd.read_csv(path+nameGC+'_ehb_ssp.dat',  engine='python', comment='#',
+#                          skip_blank_lines=True, sep='\s+',  header=1,
+#                          names=['wavelength', 'flux'])
+#total_ssp= pd.read_csv(path+nameGC+'_total_ssp.dat',engine='python', comment='#',
+#                          skip_blank_lines=True, sep='\s+',  header=1,
+#                          names=['wavelength', 'flux'])
+
+base_ssp =rsp.degrade_resolving_power(path+nameGC+'_base_ssp.dat', 5000)
+bs_ssp   = rsp.degrade_resolving_power(path+nameGC+'_bs_ssp.dat',  5000)
+bhb_ssp  = rsp.degrade_resolving_power(path+nameGC+'_bhb_ssp.dat', 5000)
+ehb_ssp  = rsp.degrade_resolving_power(path+nameGC+'_ehb_ssp.dat', 5000)
+total_ssp=rsp.degrade_resolving_power(path+nameGC+'_total_ssp.dat',5000)
+index_ssp_base = np.argmin(np.abs(base_ssp['wavelength'] - 4950))
+index_ssp_bs   = np.argmin(np.abs(bs_ssp['wavelength'] - 4950))
+index_ssp_bhb  = np.argmin(np.abs(bhb_ssp['wavelength'] - 4950))
+index_ssp_ehb  = np.argmin(np.abs(ehb_ssp['wavelength'] - 4950))
+index_ssp_total= np.argmin(np.abs(total_ssp['wavelength'] - 4950))
 
 Ha = 6562.5
 Hb = 4860.74
@@ -329,9 +340,9 @@ Hc = 4340.1
 Hd = 4101.2
 Ca = 3951.
 
-abs.plot_ssp_lines(base_ssp,
-                   bs_ssp,  
-                   bhb_ssp, 
-                   ehb_ssp, 
-                   total_ssp,
-                   'NGC2808_Ha', Ha)
+abs.plot_ssp_lines(base_ssp, index_ssp_base ,
+                   bs_ssp,   index_ssp_bs   ,
+                   bhb_ssp,  index_ssp_bhb  ,
+                   ehb_ssp,  index_ssp_ehb  ,
+                   total_ssp,index_ssp_total,
+                   'NGC2808_Hb', Hb)
