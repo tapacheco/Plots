@@ -6,7 +6,7 @@ from astropy.io import fits
 from astropy.convolution import convolve_fft
 from astropy.convolution import Gaussian1DKernel
 
-w_min, w_max = (2500.1, 8999.9)
+w_min, w_max = (1100.1, 8999.9)
 
 def degrade_resolving_power(file, resolution):
     data = pd.read_csv(file, engine='python', comment='#', skip_blank_lines=True, header=1,
