@@ -323,26 +323,33 @@ obs.plot_ssp(total_ssp['wavelength'], total_ssp['flux'], index_ssp,\
 #                          skip_blank_lines=True, sep='\s+',  header=1,
 #                          names=['wavelength', 'flux'])
 
-base_ssp =rsp.degrade_resolving_power(path+nameGC+'_base_ssp.dat', 5000)
-bs_ssp   = rsp.degrade_resolving_power(path+nameGC+'_bs_ssp.dat',  5000)
-bhb_ssp  = rsp.degrade_resolving_power(path+nameGC+'_bhb_ssp.dat', 5000)
-ehb_ssp  = rsp.degrade_resolving_power(path+nameGC+'_ehb_ssp.dat', 5000)
-total_ssp=rsp.degrade_resolving_power(path+nameGC+'_total_ssp.dat',5000)
-index_ssp_base = np.argmin(np.abs(base_ssp['wavelength'] - 4950))
-index_ssp_bs   = np.argmin(np.abs(bs_ssp['wavelength'] - 4950))
-index_ssp_bhb  = np.argmin(np.abs(bhb_ssp['wavelength'] - 4950))
-index_ssp_ehb  = np.argmin(np.abs(ehb_ssp['wavelength'] - 4950))
-index_ssp_total= np.argmin(np.abs(total_ssp['wavelength'] - 4950))
-
+base_ssp =rsp.degrade_resolving_power(path+nameGC+'_base_ssp.dat', 6000)
+bs_ssp   = rsp.degrade_resolving_power(path+nameGC+'_bs_ssp.dat',  6000)
+bhb_ssp  = rsp.degrade_resolving_power(path+nameGC+'_bhb_ssp.dat', 6000)
+ehb_ssp  = rsp.degrade_resolving_power(path+nameGC+'_ehb_ssp.dat', 6000)
+total_ssp=rsp.degrade_resolving_power(path+nameGC+'_total_ssp.dat',6000)
+index_ssp_base = np.argmin(np.abs(base_ssp['wavelength'] - 2830))
+index_ssp_bs   =   np.argmin(np.abs(bs_ssp['wavelength'] - 2830))
+index_ssp_bhb  =  np.argmin(np.abs(bhb_ssp['wavelength'] - 2830))
+index_ssp_ehb  =  np.argmin(np.abs(ehb_ssp['wavelength'] - 2830))
+index_ssp_total=np.argmin(np.abs(total_ssp['wavelength'] - 2830))
+print('%f \n %f \n %f \n %f \n %f \n',
+      (total_ssp['flux'][index_ssp_base],
+       base_ssp['flux'][index_ssp_bs],   
+       bs_ssp['flux'][index_ssp_bhb],    
+       bhb_ssp['flux'][index_ssp_ehb],   
+       ehb_ssp['flux'][index_ssp_total]))
 Ha = 6562.5
 Hb = 4860.74
 Hc = 4340.1 
 Hd = 4101.2
 Ca = 3951.
+Mg = 2800.
+Lya = 1215.67
 
 abs.plot_ssp_lines(base_ssp, index_ssp_base ,
                    bs_ssp,   index_ssp_bs   ,
                    bhb_ssp,  index_ssp_bhb  ,
                    ehb_ssp,  index_ssp_ehb  ,
-                   total_ssp,index_ssp_total,
-                   'NGC2808_Hb', Hb)
+                   total_ssp,index_ssp_total, 
+                   'NGC2808_Mg', Mg)
